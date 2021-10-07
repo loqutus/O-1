@@ -3,13 +3,13 @@ package main
 import (
 	"sync"
 
-	nested "github.com/antonfisher/nested-logrus-formatter"
 	"github.com/loqutus/O-1/pkg/telegram"
 	"github.com/sirupsen/logrus"
+	"github.com/zput/zxcTool/ztLog/zt_formatter"
 )
 
 func main() {
-	logrus.SetFormatter(&nested.Formatter{})
+	logrus.SetFormatter(&zt_formatter.ZtFormatter{})
 	var wg sync.WaitGroup
 	go telegram.StartBot(&wg)
 	wg.Add(1)

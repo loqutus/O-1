@@ -1,3 +1,4 @@
+.DEFAULT_GOAL := build_and_run
 BINARY_NAME=o1
 
 build:
