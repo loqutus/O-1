@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"github.com/loqutus/O-1/pkg/etcdclient"
 	"github.com/loqutus/O-1/pkg/server"
 	"github.com/sirupsen/logrus"
@@ -9,9 +11,10 @@ import (
 
 func main() {
 	logrus.SetFormatter(&zt_formatter.ZtFormatter{})
+	localDir := os.Getenv("O1_LOCAL_DIR")
 	ctx, cli, err := etcdclient.New()
 	if err != nil {
 		logrus.Fatal(err)
 	}
-	server.Start(ctx, cli)
+	server.Start(&ctx, cli, localDir)
 }
