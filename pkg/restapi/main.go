@@ -1,4 +1,4 @@
-package httpserver
+package restapi
 
 import (
 	"net/http"
@@ -6,7 +6,7 @@ import (
 	chi "github.com/go-chi/chi/v5"
 )
 
-func Start() {
+func Start(ctx *context.Context, cli *clientv3.Client) {
 	r := chi.NewRouter()
 
 	r.Get(":id", GetFile)
