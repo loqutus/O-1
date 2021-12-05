@@ -1,7 +1,6 @@
 package restapi
 
 import (
-	"context"
 	"net/http"
 
 	chi "github.com/go-chi/chi/v5"
@@ -9,10 +8,7 @@ import (
 
 var api RestAPI
 
-func Start(ctx *context.Context, cli *clientv3.Client, localDir string) {
-	api.Ctx = ctx
-	api.Cli = cli
-	api.LocalDir = localDir
+func Start() {
 
 	r := chi.NewRouter()
 

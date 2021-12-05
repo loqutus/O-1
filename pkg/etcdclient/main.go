@@ -13,8 +13,9 @@ func New() (context.Context, clientv3.Client, error) {
 		Endpoints:   []string{"http://etcd:2379"},
 		DialTimeout: 10 * time.Second,
 	})
+
 	if err != nil {
-		return ctx, nil, err
+		return ctx, clientv3., err
 	}
 	return ctx, cli, nil
 }

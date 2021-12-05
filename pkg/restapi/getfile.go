@@ -16,7 +16,7 @@ func GetFile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	var fileInfo types.FileInfo
-	err := json.Unmarshal([]byte(fileInfoString), &fileInfo)
+	err = json.Unmarshal([]byte(fileInfoString), &fileInfo)
 	if err != nil {
 		Error(err, &w)
 		return
