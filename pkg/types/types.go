@@ -18,7 +18,7 @@ type ServerInfo struct {
 	NodeName string
 	Nodex    []string
 	Ctx      *context.Context
-	Cli      clientv3.Client
+	Cli      *clientv3.Client
 }
 
 var Server ServerInfo
