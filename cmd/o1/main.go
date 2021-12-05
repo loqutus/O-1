@@ -12,6 +12,9 @@ import (
 func main() {
 	logrus.SetFormatter(&zt_formatter.ZtFormatter{})
 	localDir := os.Getenv("O1_LOCAL_DIR")
+	if localDir == "" {
+		localDir = "/tmp/O-1"
+	}
 	ctx, cli, err := etcdclient.New()
 	if err != nil {
 		logrus.Fatal(err)
