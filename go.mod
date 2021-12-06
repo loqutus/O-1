@@ -9,9 +9,9 @@ require (
 )
 
 require (
-	github.com/pkg/errors v0.8.1 // indirect
+	github.com/go-chi/chi/v5 v5.0.7 // indirect
 	github.com/technoweenie/multipartstreamer v1.0.1 // indirect
 	github.com/zput/zxcTool v1.3.9 // indirect
-	golang.org/x/sys v0.0.0-20210124154548-22da62e12c0c // indirect
+	go.etcd.io/etcd/client/v3 v3.5.1 // indirect
 	gopkg.in/tucnak/telebot.v2 v2.4.0 // indirect
 )
