@@ -10,7 +10,7 @@ import (
 
 func GetFile(w http.ResponseWriter, r *http.Request) {
 	fileName := r.URL.Path
-	fileInfoString, err := types.Server.Cli.Get(types.Server.Ctx, fileName)
+	fileInfoString, err := types.Server.Cli.Get(*types.Server.Ctx, fileName)
 	if err != nil {
 		Error(err, w)
 		return
