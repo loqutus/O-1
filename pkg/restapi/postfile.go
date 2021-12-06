@@ -41,8 +41,8 @@ func PostFileHandler(w http.ResponseWriter, r *http.Request) {
 		SHA256: string(SHA256),
 		Nodes:  []string{},
 	}
-	fileNameJSON, _ := json.Marshal(fileInfo)
-	_, err = types.Server.Cli.Put(types.Server.Ctx, fileNameJSON, fileInfo)
+	fileInfoJSON, _ := json.Marshal(fileInfo)
+	_, err = types.Server.Cli.Put(*types.Server.Ctx, fileName, string(fileInfoJSON))
 	if err != nil {
 		Error(err, w)
 		return

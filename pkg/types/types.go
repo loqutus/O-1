@@ -16,7 +16,7 @@ type FileInfo struct {
 type ServerInfo struct {
 	LocalDir string
 	NodeName string
-	Nodex    []string
+	Nodes    []string
 	Ctx      *context.Context
 	Cli      *clientv3.Client
 }

@@ -10,10 +10,14 @@ import (
 
 func GetFile(w http.ResponseWriter, r *http.Request) {
 	fileName := r.URL.Path
-	fileInfoString, err := types.Server.Cli.Get(*types.Server.Ctx, fileName)
+	resp, err := types.Server.Cli.Get(*types.Server.Ctx, fileName)
 	if err != nil {
 		Error(err, w)
 		return
+	}
+	fileInfoString := ""
+	for _, ev := range resp.Kvs {
+		fileInfoString += string(ev.Value)
 	}
 	var fileInfo types.FileInfo
 	err = json.Unmarshal([]byte(fileInfoString), &fileInfo)
