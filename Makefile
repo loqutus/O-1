@@ -19,6 +19,6 @@ docker:
 
 helm:
 	helm install o1 ./helm
-	helm purge o1
+	helm delete o1
 
 default: build
