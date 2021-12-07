@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := default
-.PHONY: all default helm
+.PHONY: all helm
 BINARY_NAME=o1
 
 build:
