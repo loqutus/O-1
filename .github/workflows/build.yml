@@ -24,6 +24,6 @@ jobs:
        minikube version: 'v1.24.0'
        kubernetes version: 'v1.23.0'
     - name: install helm
-      run: https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+      run: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
     - name: run Helm
       run: make helm
