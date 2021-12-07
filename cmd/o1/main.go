@@ -29,7 +29,7 @@ func main() {
 	if err != nil {
 		logrus.Fatal(err)
 	}
-	types.ServerInfo.Cli = cli
-	types.ServerInfo.Ctx = ctx
+	types.Server.Cli = cli
+	types.Server.Ctx = &ctx
 	server.Start()
 }

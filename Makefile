@@ -12,4 +12,4 @@ clean:
 	go clean
 	rm bin/${BINARY_NAME}-linux
 
-default: build run
+default: build
