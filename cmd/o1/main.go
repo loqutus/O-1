@@ -20,11 +20,14 @@ func main() {
 	if nodeName == "" {
 		nodeName = "localhost"
 	}
-
+	listenPort := os.Getenv("O1_LISTEN_PORT")
+	if listenPort == "" {
+		listenPort = "6969"
+	}
 	types.Server.LocalDir = localDir
 	types.Server.NodeName = nodeName
 	types.Server.Nodes = []string{nodeName}
-
+	types.Server.ListenPort = listenPort
 	ctx, cli, err := etcdclient.New()
 	if err != nil {
 		logrus.Fatal(err)

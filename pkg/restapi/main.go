@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	chi "github.com/go-chi/chi/v5"
+	"github.com/loqutus/O-1/pkg/types"
 )
 
 func Start() {
@@ -13,5 +14,5 @@ func Start() {
 	r.Get("", GetFile)
 	r.Post("", PostFileHandler)
 
-	http.ListenAndServe(":6969", r)
+	http.ListenAndServe(":"+types.Server.ListenPort, r)
 }

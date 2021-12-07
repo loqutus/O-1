@@ -14,11 +14,12 @@ type FileInfo struct {
 }
 
 type ServerInfo struct {
-	LocalDir string
-	NodeName string
-	Nodes    []string
-	Ctx      *context.Context
-	Cli      *clientv3.Client
+	LocalDir   string
+	NodeName   string
+	Nodes      []string
+	Ctx        *context.Context
+	Cli        *clientv3.Client
+	ListenPort string
 }
 
 var Server ServerInfo

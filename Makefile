@@ -12,4 +12,7 @@ clean:
 	go clean
 	rm bin/${BINARY_NAME}-linux
 
+docker:
+	docker build .
+
 default: build
