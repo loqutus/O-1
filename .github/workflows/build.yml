@@ -2,10 +2,7 @@ on: [push, pull_request]
 name: build
 jobs:
   build:
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -14,12 +11,16 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
-    - name: Setup Minikube
-      uses: manusa/actions-setup-minikube@v2.4.2
-      with:
-        minikube version: 'latest'
-        kubernetes version: 'latest'
+    
     - name: Docker build
       run: make docker
-    - name: run Helm
-      run: make helm
+  test:
+      runs-on: ubuntu-latest
+      steps:
+      - name: Setup Minikube
+        uses: manusa/actions-setup-minikube@v2.4.2
+        with:
+          minikube version: 'v1.24.0'
+          kubernetes version: 'v1.23.0'
+      - name: run Helm
+        run: make helm
