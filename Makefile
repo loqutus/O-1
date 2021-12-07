@@ -13,6 +13,7 @@ clean:
 	rm bin/${BINARY_NAME}-linux
 
 docker:
-	docker build .
+	docker build . -t loqutus/o-1
+	docker push loqutus/o-1
 
 default: build
