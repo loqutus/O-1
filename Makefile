@@ -1,4 +1,5 @@
 .DEFAULT_GOAL := default
+.PHONY: all default helm
 BINARY_NAME=o1
 
 build:
@@ -15,5 +16,8 @@ clean:
 docker:
 	docker build . -t loqutus/o-1
 	docker push loqutus/o-1
+
+helm:
+	helm install o1 ./helm
 
 default: build

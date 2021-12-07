@@ -14,5 +14,12 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Setup Minikube
+      uses: manusa/actions-setup-minikube@v2.4.2
+      with:
+        minikube version: 'latest'
+        kubernetes version: 'latest'
     - name: Docker build
       run: make docker
+    - name: run Helm
+      run: make helm
