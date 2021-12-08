@@ -4,10 +4,11 @@ BINARY_NAME=o1
 
 build:
 	go get ./...
-	CGO_ENABLED=0 GOARCH=amd64 GOOS=linux go build -o bin/${BINARY_NAME}-linux cmd/o1/server.go
+	CGO_ENABLED=0 GOARCH=amd64 GOOS=linux go build -o bin/${BINARY_NAME}-linux cmd/o1/server/server.go
+
 build_darwin:
 	go get ./...
-	CGO_ENABLED=0 GOARCH=amd64 GOOS=darwin go build -o bin/${BINARY_NAME}-darwin cmd/o1/client.go
+	CGO_ENABLED=0 GOARCH=amd64 GOOS=darwin go build -o bin/${BINARY_NAME}-darwin cmd/o1/server/server.go
 
 run:
 	./bin/${BINARY_NAME}-linux
