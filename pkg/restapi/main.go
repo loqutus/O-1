@@ -11,8 +11,8 @@ func Start() {
 
 	r := chi.NewRouter()
 
-	r.Get("", GetFile)
-	r.Post("", PostFileHandler)
+	r.Get("/", GetFile)
+	r.Post("/", PostFileHandler)
 
 	http.ListenAndServe(":"+types.Server.ListenPort, r)
 }
