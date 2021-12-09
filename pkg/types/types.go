@@ -23,3 +23,10 @@ type ServerInfo struct {
 }
 
 var Server ServerInfo
+
+type ClientInfo struct {
+	Hostname string
+	Port     string
+}
+
+var Client ClientInfo
