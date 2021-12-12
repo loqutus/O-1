@@ -25,7 +25,7 @@ type ServerInfo struct {
 var Server ServerInfo
 
 type ClientInfo struct {
-	Hostname string
+	HostName string
 	Port     string
 }
 

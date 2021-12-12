@@ -9,21 +9,25 @@ import (
 	"os"
 
 	"github.com/loqutus/O-1/pkg/types"
+	"github.com/sirupsen/logrus"
 )
 
 func PostFileHandler(w http.ResponseWriter, r *http.Request) {
-	fileName := r.URL.Path
+	fileName := r.URL.Path[1:]
+	fileNameWithPath := types.Server.LocalDir + "/" + fileName
+	logrus.Println("PostFile " + fileName)
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		Error(err, w)
 		return
 	}
-	err = os.WriteFile(types.Server.LocalDir+"/"+fileName, body, 0644)
+
+	err = os.WriteFile(fileNameWithPath, body, 0644)
 	if err != nil {
 		Error(err, w)
 		return
 	}
-	fi, err := os.Stat(types.Server.LocalDir + "/" + fileName)
+	fi, err := os.Stat(fileNameWithPath)
 	if err != nil {
 		Error(err, w)
 		return

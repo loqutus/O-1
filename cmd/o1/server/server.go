@@ -14,7 +14,7 @@ func main() {
 	logrus.SetFormatter(&zt_formatter.ZtFormatter{})
 	localDir := os.Getenv("O1_LOCAL_DIR")
 	if localDir == "" {
-		localDir = "/tmp/O-1"
+		localDir = "/tmp/O1"
 	}
 	nodeName := os.Getenv("O1_NODE_NAME")
 	if nodeName == "" {

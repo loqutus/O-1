@@ -6,10 +6,12 @@ import (
 	"os"
 
 	"github.com/loqutus/O-1/pkg/types"
+	"github.com/sirupsen/logrus"
 )
 
 func GetFile(w http.ResponseWriter, r *http.Request) {
 	fileName := r.URL.Path
+	logrus.Println("GetFile " + fileName)
 	resp, err := types.Server.Cli.Get(*types.Server.Ctx, fileName)
 	if err != nil {
 		Error(err, w)

@@ -9,20 +9,29 @@ import (
 )
 
 func main() {
+	if len(os.Args) < 3 {
+		panic("Usage: o1 <command> <filename> [<args>]")
+	}
 	cmd := os.Args[1]
 	var HostName string
 	flag.StringVar(&HostName, "host", "localhost", "hostname")
 	var Port string
 	flag.StringVar(&Port, "port", "6969", "port")
 	flag.Parse()
-	types.Client.Hostname = HostName
+	types.Client.HostName = HostName
 	types.Client.Port = Port
 
 	switch cmd {
 	case "upload":
-		client.Upload(os.Args[2])
+		err := client.Upload(os.Args[2])
+		if err != nil {
+			panic(err)
+		}
 	case "download":
-		client.Download(os.Args[2])
+		err := client.Download(os.Args[2])
+		if err != nil {
+			panic(err)
+		}
 	default:
 		panic("unknown command")
 	}
