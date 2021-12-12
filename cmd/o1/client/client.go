@@ -6,6 +6,7 @@ import (
 
 	"github.com/loqutus/O-1/pkg/client"
 	"github.com/loqutus/O-1/pkg/types"
+	"github.com/sirupsen/logrus"
 )
 
 func main() {
@@ -25,12 +26,12 @@ func main() {
 	case "upload":
 		err := client.Upload(os.Args[2])
 		if err != nil {
-			panic(err)
+			logrus.Fatal(err)
 		}
 	case "download":
 		err := client.Download(os.Args[2])
 		if err != nil {
-			panic(err)
+			logrus.Fatal(err)
 		}
 	default:
 		panic("unknown command")
