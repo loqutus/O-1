@@ -11,6 +11,7 @@ import (
 )
 
 func main() {
+	logrus.Println("O-1 server starting...")
 	logrus.SetFormatter(&zt_formatter.ZtFormatter{})
 	localDir := os.Getenv("O1_LOCAL_DIR")
 	if localDir == "" {
@@ -24,10 +25,20 @@ func main() {
 	if listenPort == "" {
 		listenPort = "6969"
 	}
+	etcdHost := os.Getenv("O1_ETCD_HOST")
+	if etcdHost == "" {
+		etcdHost = "localhost"
+	}
+	etcdPort := os.Getenv("O1_ETCD_PORT")
+	if etcdPort == "" {
+		etcdPort = "2379"
+	}
 	types.Server.LocalDir = localDir
 	types.Server.NodeName = nodeName
 	types.Server.Nodes = []string{nodeName}
 	types.Server.ListenPort = listenPort
+	types.Server.ETCDHost = etcdHost
+	types.Server.ETCDPort = etcdPort
 	ctx, cli, err := etcdclient.New()
 	if err != nil {
 		logrus.Fatal(err)

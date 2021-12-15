@@ -20,6 +20,8 @@ type ServerInfo struct {
 	Ctx        *context.Context
 	Cli        *clientv3.Client
 	ListenPort string
+	ETCDHost   string
+	ETCDPort   string
 }
 
 var Server ServerInfo
