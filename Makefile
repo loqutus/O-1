@@ -22,6 +22,8 @@ clean:
 docker:
 	docker build . -t loqutus/o-1
 	docker push loqutus/o-1
+	docker build . -f Dockerfile-client -t loqutus/o-1-client
+	docker push loqutus/o-1-client
 
 helm:
 	helm install o1 ./helm

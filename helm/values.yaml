@@ -6,6 +6,7 @@ replicaCount: 1
 
 image:
   repository: loqutus/o-1
+  client-repository: loqutus/o-1-client
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
