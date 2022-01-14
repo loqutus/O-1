@@ -1,7 +1,7 @@
 package sha256
 
 import (
-	"crypto/md5"
+	"crypto/sha256"
 	"encoding/hex"
 	"io"
 	"os"
@@ -17,7 +17,7 @@ func GetFileSHA256(filePath string) (string, error) {
 	}
 	defer file.Close()
 
-	hash := md5.New()
+	hash := sha256.New()
 	if _, err := io.Copy(hash, file); err != nil {
 		return "", err
 	}

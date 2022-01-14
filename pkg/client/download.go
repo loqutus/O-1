@@ -5,10 +5,17 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"time"
+
+	"github.com/loqutus/O-1/pkg/types"
 )
 
 func Download(fileName string) error {
-	resp, err := http.Get(fileName)
+	client := http.Client{
+		Timeout: 5 * time.Second,
+	}
+	url := "http://" + types.Client.HostName + ":" + types.Client.Port + "/" + fileName
+	resp, err := client.Get(url)
 	if err != nil {
 		return err
 	}

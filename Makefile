@@ -15,6 +15,9 @@ build_darwin:
 run:
 	./bin/${BINARY_NAME}-linux
 
+test:
+	go test ./...
+
 clean:
 	go clean
 	rm bin/${BINARY_NAME}-linux
@@ -31,4 +34,8 @@ helm:
 helm_delete:
 	helm delete o1
 
-default: build
+minikube:
+	minikube start --memory 2048 --cpus 2
+	eval $(minikube docker-env)
+
+default: build helm_delete helm
