@@ -30,8 +30,8 @@ docker:
 	docker push loqutus/o-1-client
 
 docker_run:
-	docker stop o1
-	docker rm o1
+	docker stop o1 || true
+	docker rm o1 || true
 	docker run -d -p 6969:6969 --name o1 loqutus/o-1
 
 helm:
@@ -47,8 +47,8 @@ minikube_stop:
 	minikube stop
 
 etcd:
-	docker stop etcd
-	docker rm etcd
+	docker stop etcd || true
+	docker rm etcd || true
 	docker run -d -p 2379:2379 --name etcd quay.io/coreos/etcd:v3.5.1
 
 default: minikube docker docker_run etcd test minikube_stop
