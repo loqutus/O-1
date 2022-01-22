@@ -12,17 +12,15 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Docker build
-      run: make docker
+      run: make build
   test:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
     - name: Setup Minikube
       uses: manusa/actions-setup-minikube@v2.4.2
       with:
        minikube version: 'v1.24.0'
        kubernetes version: 'v1.23.0'
     - name: run Helm
-      run: make helm
+      run: make

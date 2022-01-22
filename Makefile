@@ -23,10 +23,16 @@ clean:
 	rm bin/${BINARY_NAME}-linux
 
 docker:
+	eval $(minikube docker-env)
 	docker build . -t loqutus/o-1
 	docker push loqutus/o-1
 	docker build . -f Dockerfile-client -t loqutus/o-1-client
 	docker push loqutus/o-1-client
+
+docker_run:
+	docker stop o1
+	docker rm o1
+	docker run -d -p 6969:6969 --name o1 loqutus/o-1
 
 helm:
 	helm install o1 ./helm
@@ -36,6 +42,13 @@ helm_delete:
 
 minikube:
 	minikube start --memory 2048 --cpus 2
-	eval $(minikube docker-env)
 
-default: build helm_delete helm
+minikube_stop:
+	minikube stop
+
+etcd:
+	docker stop etcd
+	docker rm etcd
+	docker run -d -p 2379:2379 --name etcd quay.io/coreos/etcd:v3.5.1
+
+default: minikube docker docker_run etcd test minikube_stop

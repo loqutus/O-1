@@ -1,7 +1,7 @@
 FROM golang:latest AS build
 WORKDIR /go/src/github.com/loqutus/O-1
 COPY . ./
-RUN make
+RUN make build
 
 FROM alpine:latest
 WORKDIR /
