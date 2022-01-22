@@ -16,6 +16,7 @@ run:
 	./bin/${BINARY_NAME}-linux
 
 test:
+	go get ./...
 	go test ./...
 
 clean:
