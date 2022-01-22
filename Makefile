@@ -23,7 +23,6 @@ clean:
 	rm bin/${BINARY_NAME}-linux
 
 docker:
-	eval $(minikube docker-env)
 	docker build . -t loqutus/o-1
 	docker push loqutus/o-1
 	docker build . -f Dockerfile-client -t loqutus/o-1-client
@@ -42,6 +41,7 @@ helm_delete:
 
 minikube:
 	minikube start --memory 2048 --cpus 2
+	eval $(minikube docker-env)
 
 minikube_stop:
 	minikube stop
