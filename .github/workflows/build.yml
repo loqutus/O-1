@@ -16,5 +16,5 @@ jobs:
       with:
        minikube version: 'v1.24.0'
        kubernetes version: 'v1.23.0'
-    - name: run Helm
-      run: make
+    - name: make
+      run: make docker docker_run etcd test
