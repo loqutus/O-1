@@ -17,11 +17,6 @@ jobs:
     - name: make
       run: make get docker docker_run etcd test
       continue-on-error: true
-   
-  logs:
-    runs-on: ubuntu-latest
-    if: always()
-    needs: [test]
-    steps:
     - name: logs
       run: make docker_logs
+      if: always()
