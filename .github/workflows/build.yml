@@ -15,4 +15,4 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: make
-      run: make get docker docker_run etcd test
+      run: make get docker docker_run etcd test logs
