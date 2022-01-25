@@ -16,7 +16,6 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: make
       run: make get docker docker_run etcd test
-      continue-on-error: true
     - name: logs
       run: make docker_logs
       if: always()
