@@ -7,7 +7,7 @@ import (
 	"os"
 
 	"github.com/loqutus/O-1/pkg/etcdclient"
-	"github.com/loqutus/O-1/pkg/sha256"
+	"github.com/loqutus/O-1/pkg/file"
 	"github.com/loqutus/O-1/pkg/types"
 	"github.com/sirupsen/logrus"
 )
@@ -28,17 +28,7 @@ func PostFileHandler(w http.ResponseWriter, r *http.Request) {
 		Error(err, w)
 		return
 	}
-	fi, err := os.Stat(fileNameWithPath)
-	if err != nil {
-		Error(err, w)
-		return
-	}
-	fileSize := fi.Size()
-	fileHash, err := sha256.GetFileSHA256(fileNameWithPath)
-	if err != nil {
-		Error(err, w)
-		return
-	}
+	fileSize, fileHash, err := file.Write(fileNameWithPath, body)
 	fileInfo := types.FileInfo{
 		Name:   fileName,
 		Size:   fileSize,
