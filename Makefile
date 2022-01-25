@@ -37,6 +37,9 @@ docker_run:
 	docker rm o1 || true
 	docker run -d -p 6969:6969 --name o1 loqutus/o-1
 
+docker_logs:
+	docker logs o1
+
 helm:
 	helm install o1 ./helm
 
