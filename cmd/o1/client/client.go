@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"os"
+	"time"
 
 	"github.com/loqutus/O-1/pkg/client"
 	"github.com/loqutus/O-1/pkg/types"
@@ -21,6 +22,7 @@ func main() {
 	flag.Parse()
 	types.Client.HostName = HostName
 	types.Client.Port = Port
+	types.Client.Timeout = 10 * time.Second
 
 	switch cmd {
 	case "upload":

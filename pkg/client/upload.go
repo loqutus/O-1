@@ -4,7 +4,6 @@ import (
 	"errors"
 	"net/http"
 	"os"
-	"time"
 
 	"github.com/loqutus/O-1/pkg/types"
 )
@@ -20,7 +19,7 @@ func Upload(fileName string) error {
 	port := types.Client.Port
 	url := "http://" + hostname + ":" + port + "/" + fileName
 	client := http.Client{
-		Timeout: 5 * time.Second,
+		Timeout: types.Client.Timeout,
 	}
 	resp, err := client.Post(url, "application/data", f)
 	if err != nil {

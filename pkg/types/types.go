@@ -29,6 +29,7 @@ var Server ServerInfo
 type ClientInfo struct {
 	HostName string
 	Port     string
+	Timeout  time.Duration
 }
 
 var Client ClientInfo

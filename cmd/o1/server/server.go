@@ -40,7 +40,7 @@ func main() {
 	types.Server.ListenPort = listenPort
 	types.Server.ETCDHost = etcdHost
 	types.Server.ETCDPort = etcdPort
-	types.Server.Timeout = 10 * time.Second
+	types.Server.Timeout = 5 * time.Second
 	cli, err := etcdclient.New()
 	if err != nil {
 		logrus.Fatal(err)
