@@ -2,21 +2,24 @@
 .PHONY: all helm
 BINARY_NAME=o1
 
-build:
+get:
 	go get ./...
+
+build:
 	CGO_ENABLED=0 GOARCH=amd64 GOOS=linux go build -o bin/${BINARY_NAME}-linux cmd/o1/server/server.go
 	CGO_ENABLED=0 GOARCH=amd64 GOOS=linux go build -o bin/${BINARY_NAME}-client-linux cmd/o1/client/client.go
 
 build_darwin:
-	go get ./...
 	CGO_ENABLED=0 GOARCH=amd64 GOOS=darwin go build -o bin/${BINARY_NAME}-darwin cmd/o1/server/server.go
 	CGO_ENABLED=0 GOARCH=amd64 GOOS=darwin go build -o bin/${BINARY_NAME}-client-darwin cmd/o1/client/client.go
 
 run:
 	./bin/${BINARY_NAME}-linux
 
+run_darwin:
+	./bin/${BINARY_NAME}-darwin
+
 test:
-	go get ./...
 	go test ./...
 
 clean:
@@ -52,4 +55,4 @@ etcd:
 	docker rm etcd || true
 	docker run -d -p 2379:2379 --name etcd quay.io/coreos/etcd:v3.5.1
 
-default: minikube docker docker_run etcd test minikube_stop
+default: get minikube docker docker_run etcd test minikube_stop

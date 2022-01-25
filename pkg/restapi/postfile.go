@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/loqutus/O-1/pkg/etcdclient"
 	"github.com/loqutus/O-1/pkg/sha256"
 	"github.com/loqutus/O-1/pkg/types"
 	"github.com/sirupsen/logrus"
@@ -50,7 +51,7 @@ func PostFileHandler(w http.ResponseWriter, r *http.Request) {
 		Error(err, w)
 		return
 	}
-	_, err = types.Server.Cli.Put(*types.Server.Ctx, fileName, string(fileInfoJSON))
+	err = etcdclient.Put(fileName, string(fileInfoJSON))
 	if err != nil {
 		Error(err, w)
 		return

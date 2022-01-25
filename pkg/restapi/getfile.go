@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/loqutus/O-1/pkg/etcdclient"
 	"github.com/loqutus/O-1/pkg/types"
 	"github.com/sirupsen/logrus"
 )
@@ -12,14 +13,10 @@ import (
 func GetFile(w http.ResponseWriter, r *http.Request) {
 	fileName := r.URL.Path
 	logrus.Println("GetFile " + fileName)
-	resp, err := types.Server.Cli.Get(*types.Server.Ctx, fileName)
+	fileInfoString, err := etcdclient.Get(fileName)
 	if err != nil {
 		Error(err, w)
 		return
-	}
-	fileInfoString := ""
-	for _, ev := range resp.Kvs {
-		fileInfoString += string(ev.Value)
 	}
 	var fileInfo types.FileInfo
 	err = json.Unmarshal([]byte(fileInfoString), &fileInfo)

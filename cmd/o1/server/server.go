@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"time"
 
 	"github.com/loqutus/O-1/pkg/etcdclient"
 	"github.com/loqutus/O-1/pkg/server"
@@ -39,11 +40,11 @@ func main() {
 	types.Server.ListenPort = listenPort
 	types.Server.ETCDHost = etcdHost
 	types.Server.ETCDPort = etcdPort
-	ctx, cli, err := etcdclient.New()
+	types.Server.Timeout = 10 * time.Second
+	cli, err := etcdclient.New()
 	if err != nil {
 		logrus.Fatal(err)
 	}
 	types.Server.Cli = cli
-	types.Server.Ctx = &ctx
 	server.Start()
 }

@@ -10,10 +10,12 @@ import (
 
 func Start() {
 	logrus.Println("restapi: starting")
+	defer types.Server.Cli.Close()
 	r := chi.NewRouter()
 
 	r.Get("/*", GetFile)
 	r.Post("/*", PostFileHandler)
 
 	http.ListenAndServe(":"+types.Server.ListenPort, r)
+
 }

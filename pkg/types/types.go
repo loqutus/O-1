@@ -1,7 +1,7 @@
 package types
 
 import (
-	"context"
+	"time"
 
 	clientv3 "go.etcd.io/etcd/client/v3"
 )
@@ -17,11 +17,11 @@ type ServerInfo struct {
 	LocalDir   string
 	NodeName   string
 	Nodes      []string
-	Ctx        *context.Context
 	Cli        *clientv3.Client
 	ListenPort string
 	ETCDHost   string
 	ETCDPort   string
+	Timeout    time.Duration
 }
 
 var Server ServerInfo
