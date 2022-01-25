@@ -10,7 +10,6 @@ import (
 
 func Start() {
 	logrus.Println("restapi: starting")
-	defer types.Server.Cli.Close()
 	r := chi.NewRouter()
 
 	r.Get("/*", GetFile)

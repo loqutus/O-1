@@ -29,6 +29,10 @@ func PostFileHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	fileSize, fileHash, err := file.Write(fileNameWithPath, body)
+	if err != nil {
+		Error(err, w)
+		return
+	}
 	fileInfo := types.FileInfo{
 		Name:   fileName,
 		Size:   fileSize,

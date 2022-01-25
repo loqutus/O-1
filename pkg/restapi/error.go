@@ -1,12 +1,13 @@
 package restapi
 
 import (
-	"log"
 	"net/http"
+
+	"github.com/sirupsen/logrus"
 )
 
 func Error(err error, w http.ResponseWriter) {
 	w.WriteHeader(http.StatusInternalServerError)
 	w.Write([]byte(err.Error()))
-	log.Println(err.Error())
+	logrus.Warningln(err.Error())
 }

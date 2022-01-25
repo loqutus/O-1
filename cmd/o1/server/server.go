@@ -14,6 +14,7 @@ import (
 func main() {
 	logrus.Println("O-1 server starting...")
 	logrus.SetFormatter(&zt_formatter.ZtFormatter{})
+	logrus.SetReportCaller(true)
 	localDir := os.Getenv("O1_LOCAL_DIR")
 	if localDir == "" {
 		localDir = "/tmp/O1"
@@ -46,5 +47,6 @@ func main() {
 		logrus.Fatal(err)
 	}
 	types.Server.Cli = cli
+	defer types.Server.Cli.Close()
 	server.Start()
 }
