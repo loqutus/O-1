@@ -17,5 +17,5 @@ jobs:
     - name: make
       run: make get docker docker_run etcd test
     - name: logs
-      run: make docker_logs
+      run: make docker_logs etcd_logs
       if: always()
