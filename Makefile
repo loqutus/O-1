@@ -56,6 +56,6 @@ minikube_stop:
 etcd:
 	docker stop etcd || true
 	docker rm etcd || true
-	docker run -d -p 2379:2379 --name etcd quay.io/coreos/etcd:v3.5.1
+	docker run -d  -p 2379:2379 --name etcd -v /usr/share/ca-certificates/:/etc/ssl/certs quay.io/coreos/etcd:v3.5.1 -listen-client-urls http://0.0.0.0:2379
 
 default: get minikube docker docker_run etcd test minikube_stop
