@@ -15,7 +15,15 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: make
-      run: make get docker docker_run etcd test
+      run: make get docker docker_run test
     - name: logs
       run: make docker_logs etcd_logs
       if: always()
+    services:
+      etcd:
+        image: bitnami/etcd
+        ports:
+          - 2379:2379
+        env:
+          ALLOW_NONE_AUTHENTICATION: yes
+          ETCD_ADVERTISE_CLIENT_URLS: http://0.0.0.0:2379
