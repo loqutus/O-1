@@ -16,8 +16,6 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: debug
       run: netstat -tulpn | grep 2379
-    - name: debug2
-      run: telnet localhost 2379
     - name: make
       run: make get docker docker_run test
     - name: logs
