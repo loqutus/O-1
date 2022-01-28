@@ -9,7 +9,7 @@ import (
 func New() (*clientv3.Client, error) {
 	logrus.Println("etcd client init")
 	cli, err := clientv3.New(clientv3.Config{
-		Endpoints:   []string{types.Server.ETCDHost + ":" + types.Server.ETCDPort},
+		Endpoints:   []string{"http://" + types.Server.ETCDHost + ":" + types.Server.ETCDPort},
 		DialTimeout: types.Server.Timeout,
 	})
 	return cli, err
