@@ -29,7 +29,7 @@ func main() {
 	}
 	etcdHost := os.Getenv("O1_ETCD_HOST")
 	if etcdHost == "" {
-		etcdHost = "127.0.0.1"
+		etcdHost = "localhost"
 	}
 	etcdPort := os.Getenv("O1_ETCD_PORT")
 	if etcdPort == "" {
