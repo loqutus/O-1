@@ -15,7 +15,7 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: debug
-      run: netstat -tulpn | grep 2379
+      run: curl -L http://localhost:2379/version
     - name: make
       run: make get docker docker_run test
     - name: logs
