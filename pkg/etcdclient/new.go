@@ -1,6 +1,7 @@
 package etcdclient
 
 import (
+	"crypto/tls"
 	"os"
 
 	"github.com/loqutus/O-1/pkg/types"
@@ -19,6 +20,7 @@ func New() (*clientv3.Client, error) {
 		Endpoints:   []string{"http://" + types.Server.ETCDHost + ":" + types.Server.ETCDPort},
 		DialTimeout: types.Server.Timeout,
 		DialOptions: []grpc.DialOption{grpc.WithBlock()},
+		TLS:         &tls.Config{InsecureSkipVerify: true},
 	})
 	return cli, err
 }
