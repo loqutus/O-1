@@ -5,10 +5,13 @@ import (
 	"strings"
 
 	"github.com/loqutus/O-1/pkg/sha256"
+	"github.com/loqutus/O-1/pkg/types"
+	"github.com/sirupsen/logrus"
 )
 
 func Write(fileNameWithPath string, data []byte) (int64, string, error) {
-	err := EnsureDir(strings.Split(fileNameWithPath, "/")[len(strings.Split(fileNameWithPath, "/"))-1])
+	logrus.Println("Writing file:", fileNameWithPath)
+	err := EnsureDir(types.Server.LocalDir + "/" + strings.Split(fileNameWithPath, "/")[len(strings.Split(fileNameWithPath, "/"))-1])
 	if err != nil {
 		return 0, "", err
 	}

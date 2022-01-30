@@ -8,9 +8,11 @@ import (
 	"time"
 
 	"github.com/loqutus/O-1/pkg/types"
+	"github.com/sirupsen/logrus"
 )
 
 func Download(fileName string) error {
+	logrus.Println("Downloading file: ", fileName)
 	client := http.Client{
 		Timeout: 5 * time.Second,
 	}

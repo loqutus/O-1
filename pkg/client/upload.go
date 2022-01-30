@@ -6,9 +6,11 @@ import (
 	"os"
 
 	"github.com/loqutus/O-1/pkg/types"
+	"github.com/sirupsen/logrus"
 )
 
 func Upload(fileName string) error {
+	logrus.Println("Uploading file: ", fileName)
 	f, err := os.Open(fileName)
 	if err != nil {
 		return err

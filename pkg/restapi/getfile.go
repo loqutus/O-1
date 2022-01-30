@@ -11,7 +11,7 @@ import (
 )
 
 func GetFile(w http.ResponseWriter, r *http.Request) {
-	fileName := r.URL.Path
+	fileName := r.URL.Path[1:]
 	logrus.Println("GetFile " + fileName)
 	fileInfoString, err := etcdclient.Get(fileName)
 	if err != nil {

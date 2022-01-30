@@ -5,9 +5,11 @@ import (
 	"errors"
 
 	"github.com/loqutus/O-1/pkg/types"
+	"github.com/sirupsen/logrus"
 )
 
 func Get(key string) (string, error) {
+	logrus.Println("ETCD: Get", key)
 	ctx, cancel := context.WithTimeout(context.Background(), types.Server.Timeout)
 	resp, err := types.Server.Cli.Get(ctx, key)
 	cancel()
