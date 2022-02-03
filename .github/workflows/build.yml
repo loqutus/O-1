@@ -16,17 +16,17 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: run etcd
       run: |
-        export ETCD_VER=v3.5.2 \
-        export GOOGLE_URL=https://storage.googleapis.com/etcd \
-        export DOWNLOAD_URL=${GOOGLE_URL} \
         mkdir /tmp/etcd-download-test \
         curl -L ${DOWNLOAD_URL}/${ETCD_VER}/etcd-${ETCD_VER}-linux-amd64.tar.gz -o /tmp/etcd-${ETCD_VER}-linux-amd64.tar.gz \
         tar xzvf /tmp/etcd-${ETCD_VER}-linux-amd64.tar.gz -C /tmp/etcd-download-test --strip-components=1 \
         rm -f /tmp/etcd-${ETCD_VER}-linux-amd64.tar.gz \
-        export ALLOW_NONE_AUTHENTICATION=yes \
-        export ETCD_ADVERTISE_CLIENT_URLS=http://0.0.0.0:2379 \
-        export ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379 \
         /tmp/etcd-download-test/etcd
+      env:
+        ETCD_VER: v3.5.2
+        DOWNLOAD_URL: https://storage.googleapis.com/etcd
+        ALLOW_NONE_AUTHENTICATION: yes
+        ETCD_ADVERTISE_CLIENT_URLS: http://0.0.0.0:2379
+        ETCD_LISTEN_CLIENT_URLS: http://0.0.0.0:2379
     - name: debug
       run: curl -v -L http://127.0.0.1:2379/version
     - name: make
