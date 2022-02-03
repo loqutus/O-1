@@ -14,6 +14,17 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: run etcd
+      run: |
+        ETCD_VER=v3.5.2\
+        GOOGLE_URL=https://storage.googleapis.com/etcd\
+        GITHUB_URL=https://github.com/etcd-io/etcd/releases/download\
+        DOWNLOAD_URL=${GOOGLE_URL}\
+        mkdir -p /tmp/etcd-download-test\
+        curl -L ${DOWNLOAD_URL}/${ETCD_VER}/etcd-${ETCD_VER}-linux-amd64.tar.gz -o /tmp/etcd-${ETCD_VER}-linux-amd64.tar.gz\
+        tar xzvf /tmp/etcd-${ETCD_VER}-linux-amd64.tar.gz -C /tmp/etcd-download-test --strip-components=1\
+        rm -f /tmp/etcd-${ETCD_VER}-linux-amd64.tar.gz\
+        /tmp/etcd-download-test/etcd &
     - name: debug
       run: curl -v -L http://127.0.0.1:2379/version
     - name: make
