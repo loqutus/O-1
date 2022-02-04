@@ -1,9 +1,6 @@
 package client
 
 import (
-	"crypto/sha256"
-	"encoding/hex"
-	"io"
 	"os"
 	"path/filepath"
 	"testing"
@@ -19,8 +16,6 @@ func TestUpload(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer file.Close()
-	defer os.Remove(file.Name())
 	data := []byte("abc abc abc")
 	if _, err := file.Write(data); err != nil {
 		t.Fatal(err)
@@ -29,15 +24,17 @@ func TestUpload(t *testing.T) {
 	if err := Upload(fileName); err != nil {
 		t.Fatal(err)
 	}
-	hash := sha256.New()
-	if _, err := io.Copy(hash, file); err != nil {
+	correctHash, err := fileSHA256.GetFileSHA256(fileName)
+	if err != nil {
 		t.Fatal(err)
 	}
-	correctHash := hex.EncodeToString(hash.Sum(nil))
+	file.Close()
+	os.Remove(file.Name())
 	err = Download(fileName)
 	if err != nil {
 		t.Fatal(err)
 	}
+	defer os.Remove(fileName)
 	downloadedHash, err := fileSHA256.GetFileSHA256(fileName)
 	if err != nil {
 		t.Fatal(err)

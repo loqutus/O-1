@@ -16,7 +16,6 @@ func GetFileSHA256(filePath string) (string, error) {
 		return "", err
 	}
 	defer file.Close()
-
 	hash := sha256.New()
 	if _, err := io.Copy(hash, file); err != nil {
 		return "", err
