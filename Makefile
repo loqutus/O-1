@@ -35,7 +35,7 @@ docker:
 docker_run:
 	docker stop o1 || true
 	docker rm o1 || true
-	docker run -d -p 6969:6969 --name o1 loqutus/o-1 --env O1_ETCD_HOST=etcd
+	docker run -d -p 6969:6969 --name o1 --env O1_ETCD_HOST=etcd loqutus/o-1 
 
 docker_logs:
 	docker logs o1
