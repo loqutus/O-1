@@ -41,6 +41,7 @@ docker_logs:
 	docker logs o1
 
 helm:
+	helm dependency update ./helm
 	helm install o1 ./helm
 
 helm_delete:

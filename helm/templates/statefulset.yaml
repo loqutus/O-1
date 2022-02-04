@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "o1.fullname" . }}
+  labels:
+    {{- include "o1.labels" . | nindent 4 }}
+  annotations:
+    {{- with .Values.podAnnotations }}
+      {{- toYaml . | nindent 8 }}
+    {{- end }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "o1.selectorLabels" . | nindent 8 }}
+  serviceName: {{ include "o1.fullname" . }}
+  template:
+    metadata:
+      labels:
+        {{- include "o1.labels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 6969
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+          - name: {{ include "o1.fullname" . }}
+            mountPath: /tmp/O1
+          env:
+            - name: O1_ETCD_HOST
+              value: {{ include "o1.fullname" . }}-etcd
+            - name: O1_ETCD_PORT
+              value: "2379"
+  volumeClaimTemplates:
+  - metadata:
+      name: {{ include "o1.fullname" . }}
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: {{ .Values.storageSize }}

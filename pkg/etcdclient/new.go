@@ -12,9 +12,7 @@ import (
 )
 
 func New() (*clientv3.Client, error) {
-	logrus.Println("etcd client init")
-	logrus.Println("ETCDHost: ", types.Server.ETCDHost)
-	logrus.Println("ETCDPort: ", types.Server.ETCDPort)
+	logrus.Println("ETCD client init")
 	clientv3.SetLogger(grpclog.NewLoggerV2(os.Stderr, os.Stderr, os.Stderr))
 	cli, err := clientv3.New(clientv3.Config{
 		Endpoints:   []string{"http://" + types.Server.ETCDHost + ":" + types.Server.ETCDPort},
