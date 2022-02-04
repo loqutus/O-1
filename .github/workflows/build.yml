@@ -15,7 +15,7 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: debug
-      run: curl -v -L http://127.0.0.1:2379/version
+      run: curl -v -L http://etcd:2379/version
     - name: make
       run: make get docker docker_run test
     - name: logs
