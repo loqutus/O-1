@@ -14,14 +14,16 @@ type FileInfo struct {
 }
 
 type ServerInfo struct {
-	LocalDir   string
-	NodeName   string
-	Nodes      []string
-	Cli        *clientv3.Client
-	ListenPort string
-	ETCDHost   string
-	ETCDPort   string
-	Timeout    time.Duration
+	LocalDir     string
+	NodeName     string
+	Nodes        []string
+	Cli          *clientv3.Client
+	ListenPort   string
+	ETCDHost     string
+	ETCDPort     string
+	ETCDUser     string
+	ETCDPassword string
+	Timeout      time.Duration
 }
 
 var Server ServerInfo

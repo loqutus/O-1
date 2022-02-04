@@ -39,13 +39,27 @@ func main() {
 	if etcdPort == "" {
 		etcdPort = "2379"
 	}
+	etcdUser := os.Getenv("O1_ETCD_USER")
+	logrus.Println("env O1_ETCD_USER: ", etcdUser)
+	if etcdUser == "" {
+		etcdUser = "root"
+	}
+	etcdPassword := os.Getenv("O1_ETCD_PASSWORD")
+	logrus.Println("env O1_ETCD_PASSWORD: ", etcdPassword)
+	if etcdPassword == "" {
+		etcdPassword = "root"
+	}
+
 	types.Server.LocalDir = localDir
 	types.Server.NodeName = nodeName
 	types.Server.Nodes = []string{nodeName}
 	types.Server.ListenPort = listenPort
 	types.Server.ETCDHost = etcdHost
 	types.Server.ETCDPort = etcdPort
+	types.Server.ETCDUser = etcdUser
+	types.Server.ETCDPassword = etcdPassword
 	types.Server.Timeout = 5 * time.Second
+
 	cli, err := etcdclient.New()
 	if err != nil {
 		logrus.Fatal(err)

@@ -16,6 +16,8 @@ func New() (*clientv3.Client, error) {
 	clientv3.SetLogger(grpclog.NewLoggerV2(os.Stderr, os.Stderr, os.Stderr))
 	cli, err := clientv3.New(clientv3.Config{
 		Endpoints:   []string{"http://" + types.Server.ETCDHost + ":" + types.Server.ETCDPort},
+		Username:    types.Server.ETCDUser,
+		Password:    types.Server.ETCDPassword,
 		DialTimeout: types.Server.Timeout,
 		DialOptions: []grpc.DialOption{grpc.WithBlock()},
 		TLS:         &tls.Config{InsecureSkipVerify: true},

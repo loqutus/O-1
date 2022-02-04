@@ -70,4 +70,4 @@ affinity: {}
 etcd:
   auth:
     rbac:
-      enabled: false
+      rootPassword: root
