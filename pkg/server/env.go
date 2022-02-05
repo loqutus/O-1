@@ -1,20 +1,15 @@
-package main
+package server
 
 import (
 	"os"
+	"strconv"
 	"time"
 
-	"github.com/loqutus/O-1/pkg/etcdclient"
-	"github.com/loqutus/O-1/pkg/server"
 	"github.com/loqutus/O-1/pkg/types"
 	"github.com/sirupsen/logrus"
-	"github.com/zput/zxcTool/ztLog/zt_formatter"
 )
 
-func main() {
-	logrus.SetFormatter(&zt_formatter.ZtFormatter{})
-	logrus.SetReportCaller(true)
-	logrus.Println("O-1 server starting...")
+func ParseEnv() {
 	localDir := os.Getenv("O1_LOCAL_DIR")
 	if localDir == "" {
 		localDir = "/tmp/O1"
@@ -49,7 +44,20 @@ func main() {
 	if etcdPassword == "" {
 		etcdPassword = "root"
 	}
-
+	replicaCount := os.Getenv("O1_REPLICA_COUNT")
+	logrus.Println("env O1_REPLICA_COUNT: ", replicaCount)
+	if replicaCount == "" {
+		replicaCount = "1"
+	}
+	replicaCountInt, err := strconv.Atoi(replicaCount)
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	serviceName := os.Getenv("O1_SERVICE_NAME")
+	logrus.Println("env O1_SERVICE_NAME: ", serviceName)
+	if serviceName == "" {
+		serviceName = "O1"
+	}
 	types.Server.LocalDir = localDir
 	types.Server.NodeName = nodeName
 	types.Server.Nodes = []string{nodeName}
@@ -58,13 +66,7 @@ func main() {
 	types.Server.ETCDPort = etcdPort
 	types.Server.ETCDUser = etcdUser
 	types.Server.ETCDPassword = etcdPassword
+	types.Server.ReplicaCount = replicaCountInt
+	types.Server.ServiceName = serviceName
 	types.Server.Timeout = 5 * time.Second
-
-	cli, err := etcdclient.New()
-	if err != nil {
-		logrus.Fatal(err)
-	}
-	types.Server.Cli = cli
-	defer types.Server.Cli.Close()
-	server.Start()
 }

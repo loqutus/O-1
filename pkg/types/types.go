@@ -24,6 +24,8 @@ type ServerInfo struct {
 	ETCDUser     string
 	ETCDPassword string
 	Timeout      time.Duration
+	ReplicaCount int
+	ServiceName  string
 }
 
 var Server ServerInfo

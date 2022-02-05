@@ -1,3 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "o1.fullname" . }}-headless
+  labels:
+    {{- include "o1.labels" . | nindent 4 }}
+spec:
+  ports:
+  - port: 6969
+    name: {{ include "o1.fullname" . }}
+  clusterIP: None
+  selector:
+    {{- include "o1.labels" . | nindent 4 }}
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -37,6 +51,10 @@ spec:
               value: {{ include "o1.fullname" . }}-etcd
             - name: O1_ETCD_PORT
               value: "2379"
+            - name: O1_REPLICA_COUNT
+              value: "{{ .Values.replicaCount }}"
+            - name: O1_SERVICE_NAME
+              value: {{ include "o1.fullname" . }}-headless
   volumeClaimTemplates:
   - metadata:
       name: {{ include "o1.fullname" . }}
