@@ -14,6 +14,7 @@ func Start() {
 
 	r.Get("/*", GetFile)
 	r.Post("/*", PostFileHandler)
+	r.Delete("/*", DeleteFileHandler)
 
 	http.ListenAndServe(":"+types.Server.ListenPort, r)
 

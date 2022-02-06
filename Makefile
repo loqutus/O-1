@@ -45,7 +45,8 @@ helm:
 	helm install o1 ./helm
 
 helm_delete:
-	helm delete o1
+	helm delete o1 || true
+	kubectl delete pvc  data-o1-etcd-0 || true
 
 minikube:
 	minikube start --memory 2048 --cpus 2

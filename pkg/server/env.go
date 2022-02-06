@@ -58,6 +58,11 @@ func ParseEnv() {
 	if serviceName == "" {
 		serviceName = "O1"
 	}
+	namespace := os.Getenv("O1_NAMESPACE")
+	logrus.Println("env O1_NAMESPACE: ", namespace)
+	if namespace == "" {
+		namespace = "default"
+	}
 	types.Server.LocalDir = localDir
 	types.Server.NodeName = nodeName
 	types.Server.Nodes = []string{nodeName}
@@ -69,4 +74,5 @@ func ParseEnv() {
 	types.Server.ReplicaCount = replicaCountInt
 	types.Server.ServiceName = serviceName
 	types.Server.Timeout = 5 * time.Second
+	types.Server.Namespace = namespace
 }

@@ -26,6 +26,8 @@ type ServerInfo struct {
 	Timeout      time.Duration
 	ReplicaCount int
 	ServiceName  string
+	Namespace    string
+	HostName     string
 }
 
 var Server ServerInfo

@@ -9,6 +9,7 @@ import (
 
 func Start() {
 	logrus.Println("Starting server...")
+	getNodes()
 	file.EnsureDir(types.Server.LocalDir)
 	restapi.Start()
 }

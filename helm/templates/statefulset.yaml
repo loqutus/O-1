@@ -54,7 +54,9 @@ spec:
             - name: O1_REPLICA_COUNT
               value: "{{ .Values.replicaCount }}"
             - name: O1_SERVICE_NAME
-              value: {{ include "o1.fullname" . }}-headless
+              value: {{ include "o1.fullname" . }}
+            - name: O1_NAMESPACE
+              value: {{ .Release.Namespace }}
   volumeClaimTemplates:
   - metadata:
       name: {{ include "o1.fullname" . }}

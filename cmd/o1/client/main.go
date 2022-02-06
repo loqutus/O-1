@@ -35,6 +35,11 @@ func main() {
 		if err != nil {
 			logrus.Fatal(err)
 		}
+	case "delete":
+		err := client.Delete(os.Args[2])
+		if err != nil {
+			logrus.Fatal(err)
+		}
 	default:
 		panic("unknown command")
 	}
