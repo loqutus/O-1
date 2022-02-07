@@ -33,11 +33,12 @@ func PostFileHandler(w http.ResponseWriter, r *http.Request) {
 		Error(err, w)
 		return
 	}
+	nodes := chooseNodes()
 	fileInfo := types.FileInfo{
 		Name:   fileName,
 		Size:   fileSize,
 		SHA256: string(fileHash),
-		Nodes:  []string{},
+		Nodes:  nodes,
 	}
 	logrus.Println("Putting fileInfo to ETCD: " + fileName)
 	fileInfoJSON, err := json.Marshal(fileInfo)

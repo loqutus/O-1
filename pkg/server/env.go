@@ -75,4 +75,5 @@ func ParseEnv() {
 	types.Server.ServiceName = serviceName
 	types.Server.Timeout = 5 * time.Second
 	types.Server.Namespace = namespace
+	return
 }
