@@ -9,7 +9,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func Upload(fileName string) error {
+func Upload(fileName string, justWrite bool) error {
 	logrus.Println("Uploading file: ", fileName)
 	f, err := os.Open(fileName)
 	if err != nil {
@@ -23,7 +23,17 @@ func Upload(fileName string) error {
 	client := http.Client{
 		Timeout: types.Client.Timeout,
 	}
-	resp, err := client.Post(url, "application/data", f)
+	req, err := http.NewRequest("POST", url, f)
+	if err != nil {
+		return err
+	}
+	req.Header.Set("Content-Type", "application/octet-stream")
+	if justWrite {
+		req.Header.Set("O1-Just-Write", "true")
+	} else {
+		req.Header.Set("O1-Just-Write", "false")
+	}
+	resp, err := client.Do(req)
 	if err != nil {
 		return err
 	}

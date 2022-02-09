@@ -8,12 +8,19 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func Delete(fileName string) error {
+func Delete(fileName string, justDelete bool) error {
 	logrus.Println("Deleting file: ", fileName)
 	hostname := types.Client.HostName
 	port := types.Client.Port
 	url := "http://" + hostname + ":" + port + "/" + fileName
 	req, err := http.NewRequest("DELETE", url, nil)
+	if err != nil {
+		return err
+	}
+	req.Header.Set("Content-Type", "application/octet-stream")
+	if justDelete {
+		req.Header.Set("O1-Just-Delete", "true")
+	}
 	client := http.Client{
 		Timeout: types.Client.Timeout,
 	}

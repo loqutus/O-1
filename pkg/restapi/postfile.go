@@ -4,8 +4,9 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
-	"os"
+	"time"
 
+	"github.com/loqutus/O-1/pkg/client"
 	"github.com/loqutus/O-1/pkg/etcdclient"
 	"github.com/loqutus/O-1/pkg/file"
 	"github.com/loqutus/O-1/pkg/types"
@@ -22,18 +23,32 @@ func PostFileHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer r.Body.Close()
-	logrus.Println("Writing file " + fileName)
-	err = os.WriteFile(fileNameWithPath, body, 0644)
-	if err != nil {
-		Error(err, w)
-		return
-	}
 	fileSize, fileHash, err := file.Write(fileNameWithPath, body)
 	if err != nil {
 		Error(err, w)
 		return
 	}
 	nodes := chooseNodes()
+	types.Client.Port = types.Server.ListenPort
+	types.Client.Timeout = 5 * time.Second
+	justWrite := false
+	justWriteString := r.Header.Get("O1-Just-Write")
+	if justWriteString == "true" {
+		justWrite = true
+	}
+	if !justWrite {
+		for _, node := range nodes {
+			if node == types.Server.HostName {
+				continue
+			}
+			types.Client.HostName = node
+			err := client.Upload(fileNameWithPath, true)
+			if err != nil {
+				Error(err, w)
+				return
+			}
+		}
+	}
 	fileInfo := types.FileInfo{
 		Name:   fileName,
 		Size:   fileSize,

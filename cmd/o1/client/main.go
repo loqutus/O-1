@@ -26,7 +26,7 @@ func main() {
 
 	switch cmd {
 	case "upload":
-		err := client.Upload(os.Args[2])
+		err := client.Upload(os.Args[2], false)
 		if err != nil {
 			logrus.Fatal(err)
 		}
@@ -36,7 +36,7 @@ func main() {
 			logrus.Fatal(err)
 		}
 	case "delete":
-		err := client.Delete(os.Args[2])
+		err := client.Delete(os.Args[2], false)
 		if err != nil {
 			logrus.Fatal(err)
 		}

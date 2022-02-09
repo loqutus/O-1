@@ -16,12 +16,13 @@ func TestUpload(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	defer os.Remove(file.Name())
 	data := []byte("abc abc abc")
 	if _, err := file.Write(data); err != nil {
 		t.Fatal(err)
 	}
 	fileName := filepath.Base(file.Name())
-	if err := Upload(fileName); err != nil {
+	if err := Upload(fileName, false); err != nil {
 		t.Fatal(err)
 	}
 	correctHash, err := fileSHA256.GetFileSHA256(fileName)

@@ -1,9 +1,11 @@
 package restapi
 
 import (
+	"encoding/json"
 	"net/http"
 	"os"
 
+	"github.com/loqutus/O-1/pkg/client"
 	"github.com/loqutus/O-1/pkg/etcdclient"
 	"github.com/loqutus/O-1/pkg/types"
 	"github.com/sirupsen/logrus"
@@ -17,6 +19,36 @@ func DeleteFileHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		Error(err, w)
 		return
+	}
+	fileInfoString, err := etcdclient.Get(fileName)
+	if err != nil {
+		Error(err, w)
+		return
+	}
+	types.Client.Port = types.Server.ListenPort
+	var fileInfo types.FileInfo
+	err = json.Unmarshal([]byte(fileInfoString), &fileInfo)
+	if err != nil {
+		Error(err, w)
+		return
+	}
+	justWrite := false
+	justWriteString := r.Header.Get("O1-Just-Write")
+	if justWriteString == "true" {
+		justWrite = true
+	}
+	if !justWrite {
+		for _, node := range fileInfo.Nodes {
+			if node == types.Server.HostName {
+				continue
+			}
+			types.Client.HostName = node
+			err := client.Delete(fileName, true)
+			if err != nil {
+				Error(err, w)
+				return
+			}
+		}
 	}
 	err = etcdclient.Delete(fileName)
 	if err != nil {

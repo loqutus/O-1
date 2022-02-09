@@ -11,7 +11,12 @@ import (
 
 func Write(fileNameWithPath string, data []byte) (int64, string, error) {
 	logrus.Println("Writing file:", fileNameWithPath)
-	err := EnsureDir(types.Server.LocalDir + "/" + strings.Split(fileNameWithPath, "/")[len(strings.Split(fileNameWithPath, "/"))-1])
+	fileName := strings.TrimPrefix(fileNameWithPath, types.Server.LocalDir)
+	fileNameSplit := strings.Split(fileName, "/")
+	fileNameSplitLen := len(fileNameSplit)
+	fileNameDir := strings.Join(fileNameSplit[:fileNameSplitLen-1], "/")
+	fullPathDir := types.Server.LocalDir + "/" + fileNameDir
+	err := EnsureDir(fullPathDir)
 	if err != nil {
 		return 0, "", err
 	}

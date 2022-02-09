@@ -43,6 +43,8 @@ docker_logs:
 helm:
 	helm dependency update ./helm
 	helm install o1 ./helm
+	kubectl rollout status statefulset/o1-etcd
+	kubectl rollout status statefulset/o1
 
 helm_delete:
 	helm delete o1 || true
@@ -63,4 +65,7 @@ etcd:
 etcd_logs:
 	docker logs etcd
 
-default: get minikube docker docker_run etcd test minikube_stop
+port_forward:
+	kubectl port-forward service/o1 6969:6969
+
+default: docker helm_delete helm port_forward
