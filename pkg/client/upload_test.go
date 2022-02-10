@@ -46,7 +46,7 @@ func upload(t *testing.T) {
 		t.Fatal(err)
 	}
 	defer os.Remove(fileName)
-	downloadedHash, err := fileSHA256.GetFileSHA256(fileName)
+	downloadedHash, err := fileSHA256.GetFileSHA256(filepath.Base(fileName))
 	if err != nil {
 		t.Fatal(err)
 	}
