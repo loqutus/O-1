@@ -43,4 +43,12 @@ func TestUpload(t *testing.T) {
 	if correctHash != downloadedHash {
 		t.Fatalf("hash mismatch: %s != %s", correctHash, downloadedHash)
 	}
+	err = Delete(fileName, false)
+	if err != nil {
+		t.Fatal(err)
+	}
+	err = Download(fileName)
+	if err == nil {
+		t.Fatal("file should not exist")
+	}
 }
