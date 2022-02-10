@@ -14,38 +14,44 @@ func ParseEnv() {
 	if localDir == "" {
 		localDir = "/tmp/O1"
 	}
-	logrus.Println("env O1_LOCAL_DIR: ", localDir)
+	logrus.Println("O1_LOCAL_DIR: ", localDir)
 	nodeName := os.Getenv("O1_NODE_NAME")
 	if nodeName == "" {
 		nodeName = "localhost"
 	}
+	logrus.Println("O1_NODE_NAME: ", nodeName)
 	listenPort := os.Getenv("O1_LISTEN_PORT")
-	logrus.Println("env O1_LISTEN_PORT: ", listenPort)
 	if listenPort == "" {
 		listenPort = "6969"
 	}
+	logrus.Println("O1_LISTEN_PORT: ", listenPort)
+	listenPortProbe := os.Getenv("O1_LISTEN_PORT_PROBE")
+	if listenPortProbe == "" {
+		listenPortProbe = "6970"
+	}
+	logrus.Println("O1_LISTEN_PORT_PROBE: ", listenPortProbe)
 	etcdHost := os.Getenv("O1_ETCD_HOST")
-	logrus.Println("env O1_ETCD_HOST: ", etcdHost)
 	if etcdHost == "" {
 		etcdHost = "localhost"
 	}
+	logrus.Println("env O1_ETCD_HOST: ", etcdHost)
 	etcdPort := os.Getenv("O1_ETCD_PORT")
-	logrus.Println("env O1_ETCD_PORT: ", etcdPort)
 	if etcdPort == "" {
 		etcdPort = "2379"
 	}
+	logrus.Println("env O1_ETCD_PORT: ", etcdPort)
 	etcdUser := os.Getenv("O1_ETCD_USER")
-	logrus.Println("env O1_ETCD_USER: ", etcdUser)
 	if etcdUser == "" {
 		etcdUser = "root"
 	}
+	logrus.Println("env O1_ETCD_USER: ", etcdUser)
 	etcdPassword := os.Getenv("O1_ETCD_PASSWORD")
-	logrus.Println("env O1_ETCD_PASSWORD: ", etcdPassword)
 	if etcdPassword == "" {
 		etcdPassword = "root"
 	}
+	logrus.Println("env O1_ETCD_PASSWORD: ", etcdPassword)
 	replicaCount := os.Getenv("O1_REPLICA_COUNT")
-	logrus.Println("env O1_REPLICA_COUNT: ", replicaCount)
+	logrus.Println("O1_REPLICA_COUNT: ", replicaCount)
 	if replicaCount == "" {
 		replicaCount = "1"
 	}
@@ -54,19 +60,21 @@ func ParseEnv() {
 		logrus.Fatal(err)
 	}
 	serviceName := os.Getenv("O1_SERVICE_NAME")
-	logrus.Println("env O1_SERVICE_NAME: ", serviceName)
 	if serviceName == "" {
 		serviceName = "O1"
 	}
+	logrus.Println("O1_SERVICE_NAME: ", serviceName)
 	namespace := os.Getenv("O1_NAMESPACE")
-	logrus.Println("env O1_NAMESPACE: ", namespace)
 	if namespace == "" {
 		namespace = "default"
 	}
+	logrus.Println("env O1_NAMESPACE: ", namespace)
+
 	types.Server.LocalDir = localDir
 	types.Server.NodeName = nodeName
 	types.Server.Nodes = []string{nodeName}
 	types.Server.ListenPort = listenPort
+	types.Server.ListenPortProbe = listenPortProbe
 	types.Server.ETCDHost = etcdHost
 	types.Server.ETCDPort = etcdPort
 	types.Server.ETCDUser = etcdUser

@@ -14,19 +14,12 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
-    - name: debug
-      run: curl -v -L http://etcd:2379/version
+    - name: start minikube
+      id: minikube
+      uses: medyagh/setup-minikube@master
     - name: make
-      run: make get docker docker_run test
+      run: eval $(minikube docker-env) && make 
     - name: logs
       run: make docker_logs
       if: always()
-    services:
-      etcd:
-        image: bitnami/etcd
-        ports:
-          - 2379:2379
-        env:
-          ALLOW_NONE_AUTHENTICATION: yes
-          ETCD_ADVERTISE_CLIENT_URLS: http://0.0.0.0:2379
-          ETCD_LISTEN_CLIENT_URLS: http://0.0.0.0:2379
+    timeout-minutes: 10

@@ -14,8 +14,12 @@ import (
 )
 
 func PostFileHandler(w http.ResponseWriter, r *http.Request) {
+	logrus.Println("r.URL.Path:", r.URL.Path)
+	logrus.Println("r.URL.RawPath:", r.URL.RawPath)
+	logrus.Println("URL.RequestURI()", r.URL.RequestURI())
 	fileName := r.URL.Path[1:]
 	fileNameWithPath := types.Server.LocalDir + "/" + fileName
+	logrus.Println("fileNameWithPath:", fileNameWithPath)
 	logrus.Println("PostFile " + fileName)
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -55,16 +59,18 @@ func PostFileHandler(w http.ResponseWriter, r *http.Request) {
 		SHA256: string(fileHash),
 		Nodes:  nodes,
 	}
-	logrus.Println("Putting fileInfo to ETCD: " + fileName)
-	fileInfoJSON, err := json.Marshal(fileInfo)
-	if err != nil {
-		Error(err, w)
-		return
-	}
-	err = etcdclient.Put(fileName, string(fileInfoJSON))
-	if err != nil {
-		Error(err, w)
-		return
+	if !justWrite {
+		logrus.Println("Putting fileInfo to ETCD: " + fileName)
+		fileInfoJSON, err := json.Marshal(fileInfo)
+		if err != nil {
+			Error(err, w)
+			return
+		}
+		err = etcdclient.Put(fileName, string(fileInfoJSON))
+		if err != nil {
+			Error(err, w)
+			return
+		}
 	}
 	w.WriteHeader(http.StatusOK)
 }

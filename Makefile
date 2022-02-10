@@ -20,7 +20,7 @@ run_darwin:
 	./bin/${BINARY_NAME}-darwin
 
 test:
-	go test ./...
+	go test -v -count=1 ./... 
 
 clean:
 	go clean
@@ -66,6 +66,6 @@ etcd_logs:
 	docker logs etcd
 
 port_forward:
-	kubectl port-forward service/o1 6969:6969
+	kubectl port-forward service/o1 6969:6969 &
 
-default: docker helm_delete helm port_forward
+default: docker helm_delete helm port_forward test

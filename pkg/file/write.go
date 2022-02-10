@@ -16,6 +16,7 @@ func Write(fileNameWithPath string, data []byte) (int64, string, error) {
 	fileNameSplitLen := len(fileNameSplit)
 	fileNameDir := strings.Join(fileNameSplit[:fileNameSplitLen-1], "/")
 	fullPathDir := types.Server.LocalDir + "/" + fileNameDir
+	logrus.Println("fullPathDir:", fullPathDir)
 	err := EnsureDir(fullPathDir)
 	if err != nil {
 		return 0, "", err

@@ -32,12 +32,12 @@ func DeleteFileHandler(w http.ResponseWriter, r *http.Request) {
 		Error(err, w)
 		return
 	}
-	justWrite := false
-	justWriteString := r.Header.Get("O1-Just-Write")
-	if justWriteString == "true" {
-		justWrite = true
+	justDelete := false
+	justDeleteString := r.Header.Get("O1-Just-Delete")
+	if justDeleteString == "true" {
+		justDelete = true
 	}
-	if !justWrite {
+	if !justDelete {
 		for _, node := range fileInfo.Nodes {
 			if node == types.Server.HostName {
 				continue
@@ -49,11 +49,11 @@ func DeleteFileHandler(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 		}
-	}
-	err = etcdclient.Delete(fileName)
-	if err != nil {
-		Error(err, w)
-		return
+		err = etcdclient.Delete(fileName)
+		if err != nil {
+			Error(err, w)
+			return
+		}
 	}
 	w.WriteHeader(http.StatusOK)
 }

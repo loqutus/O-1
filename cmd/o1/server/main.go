@@ -17,6 +17,7 @@ func main() {
 	if err != nil {
 		logrus.Fatal(err)
 	}
+	types.Server.Ready = true
 	types.Server.Cli = cli
 	defer types.Server.Cli.Close()
 	server.Start()
