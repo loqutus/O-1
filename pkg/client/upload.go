@@ -10,7 +10,7 @@ import (
 )
 
 func Upload(fileName string, justWrite bool) error {
-	logrus.Println("Uploading file: ", fileName)
+	logrus.Println("Uploading file: ", fileName, "To", types.Client.HostName+":"+types.Client.Port)
 	f, err := os.Open(fileName)
 	if err != nil {
 		return err

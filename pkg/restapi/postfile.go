@@ -14,12 +14,8 @@ import (
 )
 
 func PostFileHandler(w http.ResponseWriter, r *http.Request) {
-	logrus.Println("r.URL.Path:", r.URL.Path)
-	logrus.Println("r.URL.RawPath:", r.URL.RawPath)
-	logrus.Println("URL.RequestURI()", r.URL.RequestURI())
 	fileName := r.URL.Path[1:]
 	fileNameWithPath := types.Server.LocalDir + "/" + fileName
-	logrus.Println("fileNameWithPath:", fileNameWithPath)
 	logrus.Println("PostFile " + fileName)
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
