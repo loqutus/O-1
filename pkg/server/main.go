@@ -1,6 +1,8 @@
 package server
 
 import (
+	"time"
+
 	"github.com/loqutus/O-1/pkg/etcdclient"
 	"github.com/loqutus/O-1/pkg/file"
 	"github.com/loqutus/O-1/pkg/restapi"
@@ -13,12 +15,19 @@ func Start() {
 	go startProbe()
 	getNodes()
 	file.EnsureDir(types.Server.LocalDir)
-	restapi.Start()
-	cli, err := etcdclient.New()
-	if err != nil {
-		logrus.Fatal(err)
+	for {
+		cli, err := etcdclient.New()
+		if err != nil {
+			logrus.Println(err)
+			time.Sleep(types.Server.Timeout)
+		} else {
+			logrus.Println("Server is ready")
+			types.Server.Ready = true
+			types.Server.Cli = cli
+			defer types.Server.Cli.Close()
+			restapi.Start()
+			break
+		}
 	}
-	types.Server.Ready = true
-	types.Server.Cli = cli
-	defer types.Server.Cli.Close()
+	return
 }
