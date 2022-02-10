@@ -10,9 +10,10 @@ import (
 
 func Start() {
 	logrus.Println("Starting server...")
+	go startProbe()
 	getNodes()
 	file.EnsureDir(types.Server.LocalDir)
-	go restapi.Start()
+	restapi.Start()
 	cli, err := etcdclient.New()
 	if err != nil {
 		logrus.Fatal(err)

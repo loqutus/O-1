@@ -19,10 +19,6 @@ func Start() {
 	r.Post("/*", PostFileHandler)
 	r.Delete("/*", DeleteFileHandler)
 
-	rProbe := chi.NewRouter()
-	rProbe.Get("/probe/ready", ReadyProbeHandler)
-
-	go http.ListenAndServe(":"+types.Server.ListenPortProbe, rProbe)
 	for !types.Server.Ready {
 		time.Sleep(time.Second)
 	}
