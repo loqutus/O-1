@@ -2,26 +2,35 @@ package client
 
 import (
 	"os"
-	"path/filepath"
 	"testing"
 
+	"github.com/brianvoe/gofakeit/v6"
 	fileSHA256 "github.com/loqutus/O-1/pkg/sha256"
 	"github.com/loqutus/O-1/pkg/types"
 )
 
 func TestUpload(t *testing.T) {
+	for i := 0; i < 1000; i++ {
+		upload(t)
+	}
+}
+
+func upload(t *testing.T) {
 	types.Client.HostName = "localhost"
 	types.Client.Port = "6969"
-	file, err := os.CreateTemp(".", "o-1-test*")
+	file, err := os.CreateTemp("", "o-1-test*")
 	if err != nil {
 		t.Fatal(err)
 	}
 	defer os.Remove(file.Name())
-	data := []byte("abc abc abc")
+	data := []byte(gofakeit.HackerPhrase())
+	if err != nil {
+		t.Fatal(err)
+	}
 	if _, err := file.Write(data); err != nil {
 		t.Fatal(err)
 	}
-	fileName := filepath.Base(file.Name())
+	fileName := file.Name()
 	if err := Upload(fileName, false); err != nil {
 		t.Fatal(err)
 	}
