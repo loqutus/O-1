@@ -3,16 +3,18 @@ package client
 import (
 	"errors"
 	"net/http"
+	"path/filepath"
 
 	"github.com/loqutus/O-1/pkg/types"
 	"github.com/sirupsen/logrus"
 )
 
 func Delete(fileName string, justDelete bool) error {
-	logrus.Println("Deleting file: ", fileName)
+	fileNameWithoutPath := filepath.Base(fileName)
+	logrus.Println("Deleting file: ", fileNameWithoutPath)
 	hostname := types.Client.HostName
 	port := types.Client.Port
-	url := "http://" + hostname + ":" + port + "/" + fileName
+	url := "http://" + hostname + ":" + port + "/" + fileNameWithoutPath
 	req, err := http.NewRequest("DELETE", url, nil)
 	if err != nil {
 		return err
