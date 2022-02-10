@@ -4,22 +4,25 @@ import (
 	"errors"
 	"net/http"
 	"os"
+	"path/filepath"
 
 	"github.com/loqutus/O-1/pkg/types"
 	"github.com/sirupsen/logrus"
 )
 
 func Upload(fileName string, justWrite bool) error {
-	logrus.Println("Uploading file: ", fileName, "To", types.Client.HostName+":"+types.Client.Port)
+	fileNameWithoutPath := filepath.Base(fileName)
+	logrus.Println("Uploading file: ", fileNameWithoutPath)
+	logrus.Println("Server:", types.Client.HostName+":"+types.Client.Port)
 	f, err := os.Open(fileName)
 	if err != nil {
 		return err
 	}
 	defer f.Close()
 
-	hostname := types.Client.HostName
+	hostName := types.Client.HostName
 	port := types.Client.Port
-	url := "http://" + hostname + ":" + port + "/" + fileName
+	url := "http://" + hostName + ":" + port + "/" + fileNameWithoutPath
 	client := http.Client{
 		Timeout: types.Client.Timeout,
 	}
