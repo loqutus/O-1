@@ -20,6 +20,6 @@ jobs:
     - name: make
       run: eval $(minikube docker-env) && make 
     - name: logs
-      run: make docker_logs
+      run: make minikube_logs
       if: always()
     timeout-minutes: 10

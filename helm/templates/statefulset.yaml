@@ -48,8 +48,8 @@ spec:
             httpGet:
               path: /probe/ready
               port: {{ .Values.containerProbePort }}
-            initialDelaySeconds: 5
-            periodSeconds: 5
+            initialDelaySeconds: 10
+            periodSeconds: 1
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:

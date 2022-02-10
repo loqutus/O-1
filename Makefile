@@ -40,6 +40,11 @@ docker_run:
 docker_logs:
 	docker logs o1
 
+logs:
+	kubectl logs o1-0
+	kubectl logs o1-1
+	kubectl logs o1-2
+
 helm:
 	helm dependency update ./helm
 	helm install o1 ./helm
