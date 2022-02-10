@@ -11,7 +11,7 @@ import (
 )
 
 func TestUpload(t *testing.T) {
-	for i := 0; i < 1000; i++ {
+	for i := 0; i < 10; i++ {
 		upload(t)
 	}
 }
