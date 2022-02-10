@@ -2,6 +2,7 @@ package client
 
 import (
 	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/brianvoe/gofakeit/v6"
@@ -40,7 +41,7 @@ func upload(t *testing.T) {
 	}
 	file.Close()
 	os.Remove(file.Name())
-	err = Download(fileName)
+	err = Download(filepath.Base(fileName))
 	if err != nil {
 		t.Fatal(err)
 	}
