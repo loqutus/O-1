@@ -2,8 +2,10 @@ package restapi
 
 import (
 	"encoding/json"
+	"io"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"path/filepath"
 	"time"
 
@@ -25,7 +27,12 @@ func PostFileHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer r.Body.Close()
 	file.EnsureDir(filepath.Join(types.Server.LocalDir + filepath.Dir(fileName)))
-	fileSize, fileHash, err := file.Write(fileNameWithPath, body)
+	file, err := os.Create(fileNameWithPath)
+	if err != nil {
+		Error(err, w)
+		return
+	}
+	fileSize, err := io.Copy(file, r.Body)
 	if err != nil {
 		Error(err, w)
 		return
