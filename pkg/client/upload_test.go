@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/brianvoe/gofakeit/v6"
+	"github.com/loqutus/O-1/pkg/file"
 	"github.com/loqutus/O-1/pkg/sha256"
 	fileSHA256 "github.com/loqutus/O-1/pkg/sha256"
 	"github.com/loqutus/O-1/pkg/types"
@@ -74,7 +75,7 @@ func Write(fileNameWithPath string, data []byte) (int64, string, error) {
 	fileNameDir := strings.Join(fileNameSplit[:fileNameSplitLen-1], "/")
 	fullPathDir := types.Server.LocalDir + "/" + fileNameDir
 	logrus.Println("fullPathDir:", fullPathDir)
-	err := EnsureDir(fullPathDir)
+	err := file.EnsureDir(fullPathDir)
 	if err != nil {
 		return 0, "", err
 	}
