@@ -3,6 +3,7 @@ package restapi
 import (
 	"encoding/json"
 	"errors"
+	"io"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -34,10 +35,12 @@ func GetFile(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 	}
+	var f *os.File
 	fileBody := []byte{}
 	if fileHere {
 		logrus.Println("File", fileName, "should be here")
-		fileBody, err = os.ReadFile(filepath.Join(types.Server.LocalDir, fileName))
+		f, err = os.Open(filepath.Join(types.Server.LocalDir, fileName))
+		//fileBody, err = os.ReadFile(filepath.Join(types.Server.LocalDir, fileName))
 		if err != nil {
 			if errors.Is(err, os.ErrNotExist) {
 				err = getFileFromNodes(fileName, fileInfo.Nodes)
@@ -51,12 +54,12 @@ func GetFile(w http.ResponseWriter, r *http.Request) {
 					Error(err, w)
 					return
 				}
-				fileBody, err = os.ReadFile(filepath.Join(types.Server.LocalDir, fileName))
+				f, err = os.Open(filepath.Join(types.Server.LocalDir, fileName))
 				if err != nil {
 					Error(err, w)
 					return
 				}
-				err := os.Remove(filepath.Join(types.Server.LocalDir, fileName))
+				err = os.Remove(filepath.Join(types.Server.LocalDir, fileName))
 				if err != nil {
 					Error(err, w)
 				}
@@ -87,5 +90,6 @@ func GetFile(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Set("Content-Type", "application/octet-stream")
 	w.WriteHeader(http.StatusOK)
+	io.Copy(w, f)
 	w.Write(fileBody)
 }
