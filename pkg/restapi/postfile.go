@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
+	"path/filepath"
 	"time"
 
 	"github.com/loqutus/O-1/pkg/client"
@@ -23,6 +24,7 @@ func PostFileHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer r.Body.Close()
+	file.EnsureDir(filepath.Join(types.Server.LocalDir + filepath.Dir(fileName)))
 	fileSize, fileHash, err := file.Write(fileNameWithPath, body)
 	if err != nil {
 		Error(err, w)
