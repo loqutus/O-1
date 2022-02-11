@@ -32,7 +32,7 @@ func upload(t *testing.T) {
 		t.Fatal(err)
 	}
 	fileName := file.Name()
-	if err := Upload(fileName, false); err != nil {
+	if err := Upload(fileName, filepath.Base(fileName), false); err != nil {
 		t.Fatal(err)
 	}
 	correctHash, err := fileSHA256.GetFileSHA256(fileName)
