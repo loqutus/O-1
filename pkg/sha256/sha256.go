@@ -22,7 +22,7 @@ func GetFileSHA256(filePath string) (string, error) {
 		bytesRead, err := file.Read(buf)
 		if err != nil {
 			if err != io.EOF {
-				panic(err)
+				return "", err
 			}
 			break
 		}
