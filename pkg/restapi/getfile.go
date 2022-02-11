@@ -51,6 +51,7 @@ func GetFile(w http.ResponseWriter, r *http.Request) {
 					Error(err, w)
 					return
 				}
+				fileBody, err = os.ReadFile(filepath.Join(types.Server.LocalDir, fileName))
 			} else {
 				Error(err, w)
 				return
