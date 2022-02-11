@@ -17,8 +17,16 @@ func GetFileSHA256(filePath string) (string, error) {
 	}
 	defer file.Close()
 	hash := sha256.New()
-	if _, err := io.Copy(hash, file); err != nil {
-		return "", err
+	buf := make([]byte, 1024*1024)
+	for {
+		bytesRead, err := file.Read(buf)
+		if err != nil {
+			if err != io.EOF {
+				panic(err)
+			}
+			break
+		}
+		hash.Write(buf[:bytesRead])
 	}
 	return hex.EncodeToString(hash.Sum(nil)), nil
 }

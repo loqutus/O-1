@@ -3,7 +3,6 @@ package restapi
 import (
 	"encoding/json"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -12,6 +11,7 @@ import (
 	"github.com/loqutus/O-1/pkg/client"
 	"github.com/loqutus/O-1/pkg/etcdclient"
 	"github.com/loqutus/O-1/pkg/file"
+	"github.com/loqutus/O-1/pkg/sha256"
 	"github.com/loqutus/O-1/pkg/types"
 	"github.com/sirupsen/logrus"
 )
@@ -20,11 +20,6 @@ func PostFileHandler(w http.ResponseWriter, r *http.Request) {
 	fileName := r.URL.Path[1:]
 	fileNameWithPath := types.Server.LocalDir + "/" + fileName
 	logrus.Println("PostFile " + fileName)
-	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		Error(err, w)
-		return
-	}
 	defer r.Body.Close()
 	file.EnsureDir(filepath.Join(types.Server.LocalDir + filepath.Dir(fileName)))
 	file, err := os.Create(fileNameWithPath)
@@ -33,6 +28,11 @@ func PostFileHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	fileSize, err := io.Copy(file, r.Body)
+	if err != nil {
+		Error(err, w)
+		return
+	}
+	fileHash, err := sha256.GetFileSHA256(fileNameWithPath)
 	if err != nil {
 		Error(err, w)
 		return
