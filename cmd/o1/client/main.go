@@ -12,7 +12,7 @@ import (
 
 func main() {
 	if len(os.Args) < 3 {
-		panic("Usage: o1 <command> <filename> [<args>]")
+		panic("Usage: o1 <command> <filename> <path> [<args>]")
 	}
 	cmd := os.Args[1]
 	var HostName string
@@ -20,13 +20,14 @@ func main() {
 	var Port string
 	flag.StringVar(&Port, "port", "6969", "port")
 	flag.Parse()
+
 	types.Client.HostName = HostName
 	types.Client.Port = Port
 	types.Client.Timeout = 10 * time.Second
 
 	switch cmd {
 	case "upload":
-		err := client.Upload(os.Args[2], false)
+		err := client.Upload(os.Args[2], os.Args[3], false)
 		if err != nil {
 			logrus.Fatal(err)
 		}

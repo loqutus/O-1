@@ -42,7 +42,7 @@ func PostFileHandler(w http.ResponseWriter, r *http.Request) {
 				continue
 			}
 			types.Client.HostName = node
-			err := client.Upload(fileNameWithPath, true)
+			err := client.Upload(fileNameWithPath, fileName, true)
 			if err != nil {
 				Error(err, w)
 				return

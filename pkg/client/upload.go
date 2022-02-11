@@ -10,9 +10,10 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func Upload(fileName string, justWrite bool) error {
+func Upload(fileName string, path string, justWrite bool) error {
 	fileNameWithoutPath := filepath.Base(fileName)
-	logrus.Println("Uploading file: ", fileNameWithoutPath)
+	logrus.Println("Uploading file: ", fileName)
+	logrus.Println("Path: ", path)
 	logrus.Println("Server:", types.Client.HostName+":"+types.Client.Port)
 	f, err := os.Open(fileName)
 	if err != nil {
@@ -22,7 +23,12 @@ func Upload(fileName string, justWrite bool) error {
 
 	hostName := types.Client.HostName
 	port := types.Client.Port
-	url := "http://" + hostName + ":" + port + "/" + fileNameWithoutPath
+	url := ""
+	if path[len(path)-1] == '/' {
+		url = "http://" + hostName + ":" + port + "/" + path + fileNameWithoutPath
+	} else {
+		url = "http://" + hostName + ":" + port + "/" + path
+	}
 	client := http.Client{
 		Timeout: types.Client.Timeout,
 	}
