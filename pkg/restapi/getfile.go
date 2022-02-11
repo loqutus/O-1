@@ -56,6 +56,10 @@ func GetFile(w http.ResponseWriter, r *http.Request) {
 					Error(err, w)
 					return
 				}
+				err := os.Remove(filepath.Join(types.Server.LocalDir, fileName))
+				if err != nil {
+					Error(err, w)
+				}
 			} else {
 				Error(err, w)
 				return
