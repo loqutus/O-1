@@ -63,6 +63,22 @@ func GetFile(w http.ResponseWriter, r *http.Request) {
 		}
 	} else {
 		logrus.Println("File", fileName, "should be elsewhere")
+		err = getFileFromNodes(fileName, fileInfo.Nodes)
+		if err != nil {
+			Error(err, w)
+			return
+		}
+		file.EnsureDir(filepath.Join(types.Server.LocalDir, filepath.Dir(fileName)))
+		err = os.Rename(fileName, filepath.Join(types.Server.LocalDir, fileName))
+		if err != nil {
+			Error(err, w)
+			return
+		}
+		fileBody, err = os.ReadFile(filepath.Join(types.Server.LocalDir, fileName))
+		if err != nil {
+			Error(err, w)
+			return
+		}
 
 	}
 	w.Header().Set("Content-Type", "application/octet-stream")
