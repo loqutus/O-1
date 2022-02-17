@@ -41,6 +41,11 @@ func main() {
 		if err != nil {
 			logrus.Fatal(err)
 		}
+	case "info":
+		err := client.Info()
+		if err != nil {
+			logrus.Fatal(err)
+		}
 	default:
 		panic("unknown command")
 	}

@@ -15,9 +15,10 @@ func Start() {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 
-	r.Get("/*", GetFile)
+	r.Get("/*", GetFileHandler)
 	r.Post("/*", PostFileHandler)
 	r.Delete("/*", DeleteFileHandler)
+	r.Get("/info", GetInfo)
 
 	for !types.Server.Ready {
 		time.Sleep(time.Second)

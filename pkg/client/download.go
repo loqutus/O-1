@@ -8,7 +8,6 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/loqutus/O-1/pkg/file"
 	"github.com/loqutus/O-1/pkg/types"
 	"github.com/sirupsen/logrus"
 )
@@ -27,11 +26,7 @@ func Download(fileName string) error {
 		return fmt.Errorf("download failed: %s", resp.Status)
 	}
 	defer resp.Body.Close()
-	err = file.EnsureDir(filepath.Join(types.Server.LocalDir, filepath.Dir(fileName)))
-	if err != nil {
-		return err
-	}
-	f, err := os.Create(fileName)
+	f, err := os.Create(filepath.Base(fileName))
 	if err != nil {
 		return err
 	}
