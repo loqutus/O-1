@@ -20,6 +20,6 @@ func Info() error {
 	if resp.StatusCode != 200 {
 		return fmt.Errorf("download failed: %s", resp.Status)
 	}
-	
 	defer resp.Body.Close()
+	
 }

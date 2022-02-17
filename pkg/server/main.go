@@ -15,6 +15,10 @@ func Start() {
 	go startProbe()
 	getNodes()
 	file.EnsureDir(types.Server.LocalDir)
+	err := file.GetDiskInfo()
+	if err != nil {
+		logrus.Fatal(err)
+	}
 	for {
 		cli, err := etcdclient.New()
 		if err != nil {
@@ -25,6 +29,7 @@ func Start() {
 			types.Server.Ready = true
 			types.Server.Cli = cli
 			defer types.Server.Cli.Close()
+
 			restapi.Start()
 			break
 		}

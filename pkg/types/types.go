@@ -32,6 +32,15 @@ type ServerInfo struct {
 	Ready           bool
 }
 
+type NodeInfo struct {
+	FilesNum  int
+	DiskUsed  string
+	DiskFree  string
+	DiskTotal string
+}
+
+var Node NodeInfo
+
 var Server ServerInfo
 
 type ClientInfo struct {
