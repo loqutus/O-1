@@ -21,5 +21,5 @@ func Info() error {
 		return fmt.Errorf("download failed: %s", resp.Status)
 	}
 	defer resp.Body.Close()
-	
+
 }

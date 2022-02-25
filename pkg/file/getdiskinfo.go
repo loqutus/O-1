@@ -11,8 +11,8 @@ func GetDiskInfo() error {
 	if err != nil {
 		return err
 	}
-	types.Node.DiskFree = humanize.Bytes(di.Free)
-	types.Node.DiskUsed = humanize.Bytes(di.Used)
-	types.Node.DiskTotal = humanize.Bytes(di.Total)
+	types.DiskInfo.DiskFree = humanize.Bytes(di.Free)
+	types.DiskInfo.DiskUsed = humanize.Bytes(di.Used)
+	types.DiskInfo.DiskTotal = humanize.Bytes(di.Total)
 	return nil
 }

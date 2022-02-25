@@ -32,14 +32,14 @@ type ServerInfo struct {
 	Ready           bool
 }
 
-type NodeInfo struct {
+type diskInfo struct {
 	FilesNum  int
 	DiskUsed  string
 	DiskFree  string
 	DiskTotal string
 }
 
-var Node NodeInfo
+var DiskInfo diskInfo
 
 var Server ServerInfo
 
