@@ -55,5 +55,8 @@ func DeleteFileHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+	types.Info.FilesCount--
+	types.Info.Used -= uint64(fileInfo.Size)
+	types.Info.Free += uint64(fileInfo.Size)
 	w.WriteHeader(http.StatusOK)
 }

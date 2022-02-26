@@ -10,8 +10,8 @@ func GetDiskInfo() error {
 	if err != nil {
 		return err
 	}
-	types.DiskInfo.Used = usage.Used
-	types.DiskInfo.Free = usage.Free
-	types.DiskInfo.Total = usage.Total
+	types.Info.Used = usage.Used
+	types.Info.Free = usage.Free
+	types.Info.Total = usage.Total
 	return nil
 }

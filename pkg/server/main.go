@@ -29,7 +29,7 @@ func Start() {
 			types.Server.Ready = true
 			types.Server.Cli = cli
 			defer types.Server.Cli.Close()
-
+			go file.InfoWatcher()
 			restapi.Start()
 			break
 		}

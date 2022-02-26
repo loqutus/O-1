@@ -14,10 +14,6 @@ import (
 func main() {
 	if len(os.Args) < 2 {
 		panic("Usage: o1 <command> <filename> <path> [<args>]")
-	} else if len(os.Args) < 2 && os.Args[1] != "info" {
-		panic("Usage: o1 <command> <filename> <path> [<args>]")
-	} else if len(os.Args) < 3 {
-		panic("Usage: o1 <command> <filename> <path> [<args>]")
 	}
 	cmd := os.Args[1]
 	var HostName string
@@ -37,16 +33,25 @@ func main() {
 	types.Client.Timeout = time.Second * time.Duration(timeoutInt)
 	switch cmd {
 	case "upload":
+		if len(os.Args) < 4 {
+			panic("Usage: o1 upload <filename> <path> [<args>]")
+		}
 		err := client.Upload(os.Args[2], os.Args[3], false)
 		if err != nil {
 			logrus.Fatal(err)
 		}
 	case "download":
+		if len(os.Args) < 3 {
+			panic("Usage: o1 download <filename> [<args>]")
+		}
 		err := client.Download(os.Args[2])
 		if err != nil {
 			logrus.Fatal(err)
 		}
 	case "delete":
+		if len(os.Args) < 3 {
+			panic("Usage: o1 delete <path> [<args>]")
+		}
 		err := client.Delete(os.Args[2], false)
 		if err != nil {
 			logrus.Fatal(err)

@@ -15,6 +15,7 @@ require (
 
 require (
 	github.com/brianvoe/gofakeit/v6 v6.14.5
+	github.com/dustin/go-humanize v1.0.0
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/shirou/gopsutil/v3 v3.22.1
 	go.uber.org/atomic v1.9.0 // indirect

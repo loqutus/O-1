@@ -77,5 +77,8 @@ func PostFileHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+	types.Info.FilesCount++
+	types.Info.Used += uint64(fileSize)
+	types.Info.Free -= uint64(fileSize)
 	w.WriteHeader(http.StatusOK)
 }

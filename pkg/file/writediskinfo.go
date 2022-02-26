@@ -5,10 +5,12 @@ import (
 
 	"github.com/loqutus/O-1/pkg/etcdclient"
 	"github.com/loqutus/O-1/pkg/types"
+	"github.com/sirupsen/logrus"
 )
 
 func WriteDiskInfo() error {
-	str, err := json.Marshal(types.DiskInfo)
+	logrus.Println("Updating disk info...")
+	str, err := json.Marshal(types.Info)
 	if err != nil {
 		return err
 	}
