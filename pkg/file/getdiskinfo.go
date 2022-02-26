@@ -1,18 +1,17 @@
 package file
 
 import (
-	humanize "github.com/dustin/go-humanize"
 	"github.com/loqutus/O-1/pkg/types"
-	"github.com/minio/minio/internal/disk"
+	"github.com/shirou/gopsutil/disk"
 )
 
 func GetDiskInfo() error {
-	di, err := disk.GetInfo(types.Server.LocalDir)
+	usage, err := disk.Usage(types.Server.LocalDir)
 	if err != nil {
 		return err
 	}
-	types.DiskInfo.DiskFree = humanize.Bytes(di.Free)
-	types.DiskInfo.DiskUsed = humanize.Bytes(di.Used)
-	types.DiskInfo.DiskTotal = humanize.Bytes(di.Total)
+	types.DiskInfo.Used = usage.Used
+	types.DiskInfo.Free = usage.Free
+	types.DiskInfo.Total = usage.Total
 	return nil
 }

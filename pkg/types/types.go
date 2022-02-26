@@ -33,10 +33,10 @@ type ServerInfo struct {
 }
 
 type diskInfo struct {
-	FilesNum  int
-	DiskUsed  string
-	DiskFree  string
-	DiskTotal string
+	FilesNum int
+	Used     uint64
+	Free     uint64
+	Total    uint64
 }
 
 var DiskInfo diskInfo
