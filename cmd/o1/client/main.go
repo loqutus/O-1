@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/loqutus/O-1/pkg/client"
@@ -11,7 +12,11 @@ import (
 )
 
 func main() {
-	if len(os.Args) < 3 {
+	if len(os.Args) < 2 {
+		panic("Usage: o1 <command> <filename> <path> [<args>]")
+	} else if len(os.Args) < 2 && os.Args[1] != "info" {
+		panic("Usage: o1 <command> <filename> <path> [<args>]")
+	} else if len(os.Args) < 3 {
 		panic("Usage: o1 <command> <filename> <path> [<args>]")
 	}
 	cmd := os.Args[1]
@@ -19,12 +24,17 @@ func main() {
 	flag.StringVar(&HostName, "host", "localhost", "hostname")
 	var Port string
 	flag.StringVar(&Port, "port", "6969", "port")
+	var Timeout string
+	flag.StringVar(&Timeout, "timeout", "10", "timeout in seconds")
 	flag.Parse()
 
 	types.Client.HostName = HostName
 	types.Client.Port = Port
-	types.Client.Timeout = 10 * time.Second
-
+	timeoutInt, err := strconv.Atoi(Timeout)
+	if err != nil {
+		timeoutInt = 10
+	}
+	types.Client.Timeout = time.Second * time.Duration(timeoutInt)
 	switch cmd {
 	case "upload":
 		err := client.Upload(os.Args[2], os.Args[3], false)
