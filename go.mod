@@ -14,12 +14,9 @@ require (
 )
 
 require (
-	github.com/StackExchange/wmi v0.0.0-20190523213315-cbe66965904d // indirect
 	github.com/brianvoe/gofakeit/v6 v6.14.5
-	github.com/go-ole/go-ole v1.2.6 // indirect
-	github.com/google/go-cmp v0.5.6 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
-	github.com/shirou/gopsutil v0.0.0-20190901111213-e4ec7b275ada
+	github.com/shirou/gopsutil/v3 v3.22.1
 	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.7.0 // indirect
 	go.uber.org/zap v1.19.1 // indirect

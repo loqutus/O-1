@@ -2,7 +2,7 @@ package file
 
 import (
 	"github.com/loqutus/O-1/pkg/types"
-	"github.com/shirou/gopsutil/disk"
+	"github.com/shirou/gopsutil/v3/disk"
 )
 
 func GetDiskInfo() error {
