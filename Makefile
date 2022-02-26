@@ -3,6 +3,7 @@
 BINARY_NAME=o1
 
 get:
+	go mod tidy
 	go get ./...
 
 build:
