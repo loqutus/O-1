@@ -74,4 +74,4 @@ etcd_logs:
 port_forward:
 	kubectl port-forward service/o1 6969:6969 &
 
-default: docker helm_delete helm port_forward test
+default: docker helm_delete helm port_forward get test
