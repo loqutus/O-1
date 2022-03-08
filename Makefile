@@ -28,6 +28,7 @@ clean:
 	rm bin/${BINARY_NAME}-linux
 
 docker:
+	eval $(minikube docker-env)
 	docker build . -t loqutus/o-1
 	docker push loqutus/o-1
 	docker build . -f Dockerfile-client -t loqutus/o-1-client
@@ -36,7 +37,10 @@ docker:
 docker_run:
 	docker stop o1 || true
 	docker rm o1 || true
-	docker run -d -p 6969:6969 --name o1 loqutus/o-1 
+	docker run -d -p 6969:6969 --name o1 loqutus/o-1
+
+docker_prune:
+	docker image prune -f
 
 docker_logs:
 	docker logs o1
@@ -74,4 +78,4 @@ etcd_logs:
 port_forward:
 	kubectl port-forward service/o1 6969:6969 &
 
-default: docker helm_delete helm port_forward get test
+default: docker helm_delete helm port_forward get test docker_prune

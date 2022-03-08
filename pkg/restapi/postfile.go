@@ -46,32 +46,19 @@ func PostFileHandler(w http.ResponseWriter, r *http.Request) {
 		justWrite = true
 	}
 	if !justWrite {
-		for _, node := range nodes {
-			if node == types.Server.HostName {
-				continue
-			}
-			types.Client.HostName = node
-			err := client.Upload(fileNameWithPath, fileName, true)
-			if err != nil {
-				Error(err, w)
-				return
-			}
-		}
-	}
-	fileInfo := types.FileInfo{
-		Name:   fileName,
-		Size:   fileSize,
-		SHA256: string(fileHash),
-		Nodes:  nodes,
-	}
-	if !justWrite {
-		logrus.Println("Putting fileInfo to ETCD: " + fileName)
-		fileInfoJSON, err := json.Marshal(fileInfo)
+		err := UploadFileToNodes(nodes, fileName, fileNameWithPath)
 		if err != nil {
 			Error(err, w)
 			return
 		}
-		err = etcdclient.Put(fileName, string(fileInfoJSON))
+		fileInfo := types.FileInfo{
+			Name:   fileName,
+			Size:   fileSize,
+			SHA256: string(fileHash),
+			Nodes:  nodes,
+		}
+		logrus.Println("Putting fileInfo to ETCD: " + fileName)
+		err = PutFileInfoToETCD(fileName, fileInfo)
 		if err != nil {
 			Error(err, w)
 			return
@@ -81,4 +68,30 @@ func PostFileHandler(w http.ResponseWriter, r *http.Request) {
 	types.Info.Used += uint64(fileSize)
 	types.Info.Free -= uint64(fileSize)
 	w.WriteHeader(http.StatusOK)
+}
+
+func UploadFileToNodes(nodes []string, fileName string, fileNameWithPath string) error {
+	for _, node := range nodes {
+		if node == types.Server.HostName {
+			continue
+		}
+		types.Client.HostName = node
+		err := client.Upload(fileNameWithPath, fileName, true)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func PutFileInfoToETCD(fileName string, fileInfo types.FileInfo) error {
+	fileInfoJSON, err := json.Marshal(fileInfo)
+	if err != nil {
+		return err
+	}
+	err = etcdclient.Put(fileName, string(fileInfoJSON))
+	if err != nil {
+		return err
+	}
+	return nil
 }
