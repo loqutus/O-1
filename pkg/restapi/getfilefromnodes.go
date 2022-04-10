@@ -20,10 +20,11 @@ func getFileFromNodes(fileName string, nodes []string) error {
 		} else {
 			downloaded = true
 			logrus.Println("Found file", fileName, "at node", node)
+			break
 		}
 	}
 	if !downloaded {
-		return errors.New("download failed")
+		return errors.New("File " + fileName + " not found on other nodes")
 	} else {
 		return nil
 	}

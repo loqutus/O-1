@@ -22,20 +22,19 @@ func GetFileHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	fileShouldBeHere := CheckIfFileShouldBeHere(types.Server.HostName, fileInfo.Nodes)
 	var f *os.File
-	fileBody := []byte{}
+	defer f.Close()
 	if fileShouldBeHere {
 		logrus.Println("File", fileName, "should be here")
 		f, err = os.Open(filepath.Join(types.Server.LocalDir, fileName))
-		//fileBody, err = os.ReadFile(filepath.Join(types.Server.LocalDir, fileName))
 		if err != nil {
 			if errors.Is(err, os.ErrNotExist) {
+				logrus.Println("File is not found, trying to get it from another nodes")
 				err = getFileFromNodes(fileName, fileInfo.Nodes)
 				if err != nil {
 					Error(err, w)
 					return
 				}
-				file.EnsureDir(filepath.Join(types.Server.LocalDir, filepath.Dir(fileName)))
-				err = os.Rename(fileName, filepath.Join(types.Server.LocalDir, fileName))
+				err = MoveFile(fileName)
 				if err != nil {
 					Error(err, w)
 					return
@@ -44,10 +43,6 @@ func GetFileHandler(w http.ResponseWriter, r *http.Request) {
 				if err != nil {
 					Error(err, w)
 					return
-				}
-				err = os.Remove(filepath.Join(types.Server.LocalDir, fileName))
-				if err != nil {
-					Error(err, w)
 				}
 			} else {
 				Error(err, w)
@@ -62,20 +57,13 @@ func GetFileHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		file.EnsureDir(filepath.Join(types.Server.LocalDir, filepath.Dir(fileName)))
-		err = os.Rename(fileName, filepath.Join(types.Server.LocalDir, fileName))
+		err = MoveFile(fileName)
 		if err != nil {
 			Error(err, w)
 			return
 		}
-		fileBody, err = os.ReadFile(filepath.Join(types.Server.LocalDir, fileName))
-		if err != nil {
-			Error(err, w)
-			return
-		}
-
 	}
 	w.Header().Set("Content-Type", "application/octet-stream")
 	w.WriteHeader(http.StatusOK)
 	io.Copy(w, f)
-	w.Write(fileBody)
 }
