@@ -1,14 +1,12 @@
 package restapi
 
 import (
-	"encoding/json"
 	"errors"
 	"io"
 	"net/http"
 	"os"
 	"path/filepath"
 
-	"github.com/loqutus/O-1/pkg/etcdclient"
 	"github.com/loqutus/O-1/pkg/file"
 	"github.com/loqutus/O-1/pkg/types"
 	"github.com/sirupsen/logrus"
@@ -17,27 +15,15 @@ import (
 func GetFileHandler(w http.ResponseWriter, r *http.Request) {
 	fileName := r.URL.Path[1:]
 	logrus.Println("GetFile " + fileName)
-	fileInfoString, err := etcdclient.Get(fileName)
+	fileInfo, err := GetFileInfo(fileName)
 	if err != nil {
 		Error(err, w)
 		return
 	}
-	fileHere := false
-	var fileInfo types.FileInfo
-	err = json.Unmarshal([]byte(fileInfoString), &fileInfo)
-	if err != nil {
-		Error(err, w)
-		return
-	}
-	for _, nodeName := range fileInfo.Nodes {
-		if nodeName == types.Server.HostName {
-			fileHere = true
-			break
-		}
-	}
+	fileShouldBeHere := CheckIfFileShouldBeHere(types.Server.HostName, fileInfo.Nodes)
 	var f *os.File
 	fileBody := []byte{}
-	if fileHere {
+	if fileShouldBeHere {
 		logrus.Println("File", fileName, "should be here")
 		f, err = os.Open(filepath.Join(types.Server.LocalDir, fileName))
 		//fileBody, err = os.ReadFile(filepath.Join(types.Server.LocalDir, fileName))

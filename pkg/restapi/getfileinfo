@@ -1,0 +1,20 @@
+package restapi
+
+import (
+	"json"
+	"github.com/loqutus/O-1/pkg/types"
+	github.com/loqutus/O-1/pkg/etcdclient
+)
+
+func GetFileInfo(fileName string) types.FileInfo, err {
+	fileInfoString, err := etcdclient.Get(fileName)
+	if err != nil {
+		return types.FileInfo{}, err
+	}
+	var fileInfo types.FileInfo
+	err = json.Unmarshal([]byte(fileInfoString), &fileInfo)
+	if err != nil {
+		return types.FileInfo{}, err
+	}
+	return fileInfo, nil
+}
