@@ -21,6 +21,9 @@ build_darwin:
 run:
 	./bin/${BINARY_NAME}-linux
 
+run_arm64:
+	./bin/${BINARY_NAME}-linux-arm64
+
 run_darwin:
 	./bin/${BINARY_NAME}-darwin
 
@@ -48,6 +51,11 @@ docker_run:
 	docker stop o1 || true
 	docker rm o1 || true
 	docker run -d -p 6969:6969 --name o1 loqutus/o-1
+
+docker_run_arm64:
+	docker stop o1 || true
+	docker rm o1 || true
+	docker run -d -p 6969:6969 --name o1 loqutus/o-1-arm64
 
 docker_prune:
 	docker image prune -f
@@ -89,3 +97,5 @@ port_forward:
 	kubectl port-forward service/o1 6969:6969 &
 
 default: docker helm_delete helm port_forward get test docker_prune
+
+arm64: docker_arm64 helm_delete helm_arm64 port_forward get test docker_prune

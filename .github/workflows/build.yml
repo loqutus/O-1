@@ -18,7 +18,7 @@ jobs:
       id: minikube
       uses: medyagh/setup-minikube@master
     - name: make
-      run: eval $(minikube docker-env) && make 
+      run: eval $(minikube docker-env) && make && make docker_arm64
     - name: logs
       run: make logs
       if: always()
