@@ -10,6 +10,10 @@ build:
 	CGO_ENABLED=0 GOARCH=amd64 GOOS=linux go build -o bin/${BINARY_NAME}-linux cmd/o1/server/main.go
 	CGO_ENABLED=0 GOARCH=amd64 GOOS=linux go build -o bin/${BINARY_NAME}-client-linux cmd/o1/client/main.go
 
+build_arm64:
+	CGO_ENABLED=0 GOARCH=arm64 GOOS=linux go build -o bin/${BINARY_NAME}-linux cmd/o1/server/main.go
+	CGO_ENABLED=0 GOARCH=arm64 GOOS=linux go build -o bin/${BINARY_NAME}-client-linux cmd/o1/client/main.go
+
 build_darwin:
 	CGO_ENABLED=0 GOARCH=amd64 GOOS=darwin go build -o bin/${BINARY_NAME}-darwin cmd/o1/server/main.go
 	CGO_ENABLED=0 GOARCH=amd64 GOOS=darwin go build -o bin/${BINARY_NAME}-client-darwin cmd/o1/client/main.go
@@ -33,6 +37,12 @@ docker:
 	docker push loqutus/o-1
 	docker build . -f Dockerfile-client -t loqutus/o-1-client
 	docker push loqutus/o-1-client
+
+docker_arm64:
+	docker build . -f Dockerfile-arm64 -t loqutus/o-1-arm64
+	docker push loqutus/o-1-arm64
+	docker build . -f Dockerfile-client-arm64 -t loqutus/o-1-arm64-client
+	docker push loqutus/o-1-client-arm64
 
 docker_run:
 	docker stop o1 || true
