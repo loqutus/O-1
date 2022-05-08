@@ -8,6 +8,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// Get retrieves a key from ETCD.
 func Get(key string) (string, error) {
 	logrus.Println("ETCD: Get", key)
 	ctx, cancel := context.WithTimeout(context.Background(), types.Server.Timeout)

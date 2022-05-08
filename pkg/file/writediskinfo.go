@@ -8,6 +8,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// WriteDiskInfo writes disk info to ETCD.
 func WriteDiskInfo() error {
 	logrus.Println("Updating disk info...")
 	str, err := json.Marshal(types.Info)

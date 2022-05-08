@@ -11,6 +11,7 @@ import (
 	"google.golang.org/grpc/grpclog"
 )
 
+// New returns new ETCD client.
 func New() (*clientv3.Client, error) {
 	logrus.Println("ETCD client init")
 	clientv3.SetLogger(grpclog.NewLoggerV2(os.Stderr, os.Stderr, os.Stderr))

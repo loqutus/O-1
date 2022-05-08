@@ -9,6 +9,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// Delete deletes a file from the server.
 func Delete(fileName string, justDelete bool) error {
 	fileNameWithoutPath := filepath.Base(fileName)
 	logrus.Println("Deleting file: ", fileNameWithoutPath)

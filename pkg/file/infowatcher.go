@@ -7,6 +7,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// InfoWatcher periodically updates file info.
 func InfoWatcher() {
 	previousFileCount := types.Info.FilesCount
 	for {

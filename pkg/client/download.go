@@ -12,6 +12,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// Download downloads a file from the server.
 func Download(fileName string) error {
 	logrus.Println("Downloading file: ", fileName)
 	client := http.Client{

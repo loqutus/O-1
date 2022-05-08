@@ -9,6 +9,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// Sha256 calculates the SHA256 hash of a file.
 func GetFileSHA256(filePath string) (string, error) {
 	logrus.Println("GetFileSHA256 " + filePath)
 	file, err := os.Open(filePath)

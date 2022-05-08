@@ -8,6 +8,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// getNodes gets a list of nodes.
 func getNodes() {
 	res := []string{}
 	serviceName := types.Server.ServiceName

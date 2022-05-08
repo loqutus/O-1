@@ -7,6 +7,7 @@ import (
 	"github.com/loqutus/O-1/pkg/types"
 )
 
+// startProbe starts the probe.
 func startProbe() {
 	rProbe := chi.NewRouter()
 	rProbe.Get("/probe/ready", ReadyProbeHandler)

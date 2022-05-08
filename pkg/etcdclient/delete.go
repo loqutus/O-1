@@ -7,6 +7,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// Delete deletes a key from ETCD.
 func Delete(key string) error {
 	logrus.Println("ETCD: Delete", key)
 	ctx, cancel := context.WithTimeout(context.Background(), types.Server.Timeout)

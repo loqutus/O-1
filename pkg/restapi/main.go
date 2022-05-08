@@ -10,6 +10,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// Start starts the REST API.
 func Start() {
 	logrus.Println("restapi: starting")
 	r := chi.NewRouter()

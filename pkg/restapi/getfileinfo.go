@@ -7,6 +7,7 @@ import (
 	"github.com/loqutus/O-1/pkg/types"
 )
 
+// GetFileInfo returns file info.
 func GetFileInfo(fileName string) (types.FileInfo, error) {
 	fileInfoString, err := etcdclient.Get(fileName)
 	if err != nil {

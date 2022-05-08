@@ -6,6 +6,7 @@ import (
 	clientv3 "go.etcd.io/etcd/client/v3"
 )
 
+// FileInfo is the file info.
 type FileInfo struct {
 	Name   string
 	Size   int64
@@ -13,6 +14,7 @@ type FileInfo struct {
 	Nodes  []string
 }
 
+// ServerInfo is the server info.
 type ServerInfo struct {
 	LocalDir        string
 	NodeName        string
@@ -32,6 +34,7 @@ type ServerInfo struct {
 	Ready           bool
 }
 
+// DiskInfo is the disk info.
 type DiskInfo struct {
 	FilesCount int
 	Used       uint64
@@ -43,6 +46,7 @@ var Info DiskInfo
 
 var Server ServerInfo
 
+// ClientInfo is the client info.
 type ClientInfo struct {
 	HostName string
 	Port     string

@@ -9,6 +9,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// PartEnv parses environment variables.
 func ParseEnv() {
 	localDir := os.Getenv("O1_LOCAL_DIR")
 	if localDir == "" {

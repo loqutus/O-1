@@ -8,6 +8,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// GetFileFromNodes gets a file from other nodes.
 func getFileFromNodes(fileName string, nodes []string) error {
 	downloaded := false
 	for _, node := range nodes {

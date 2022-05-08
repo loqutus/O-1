@@ -10,6 +10,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// Server is the main server.
 func Start() {
 	logrus.Println("Starting server...")
 	go startProbe()

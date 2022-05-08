@@ -11,6 +11,7 @@ import (
 	"github.com/loqutus/O-1/pkg/types"
 )
 
+// Info returns information about the server.
 func Info() error {
 	client := http.Client{
 		Timeout: 5 * time.Second,

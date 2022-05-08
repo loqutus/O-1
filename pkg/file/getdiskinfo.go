@@ -5,6 +5,7 @@ import (
 	"github.com/shirou/gopsutil/v3/disk"
 )
 
+// GetDiskInfo returns the disk information.
 func GetDiskInfo() error {
 	usage, err := disk.Usage(types.Server.LocalDir)
 	if err != nil {

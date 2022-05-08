@@ -10,6 +10,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// Upload uploads a file to the server.
 func Upload(fileName string, path string, justWrite bool) error {
 	fileNameWithoutPath := filepath.Base(fileName)
 	logrus.Println("Uploading file: ", fileName)

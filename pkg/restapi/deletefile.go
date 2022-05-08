@@ -11,6 +11,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// DeleteFile handles file removal requests.
 func DeleteFileHandler(w http.ResponseWriter, r *http.Request) {
 	fileName := r.URL.Path[1:]
 	fileNameWithPath := types.Server.LocalDir + "/" + fileName

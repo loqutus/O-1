@@ -7,6 +7,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// Put puts a key into ETCD.
 func Put(key, data string) error {
 	logrus.Println("ETCD: Put", key)
 	ctx, cancel := context.WithTimeout(context.Background(), types.Server.Timeout)

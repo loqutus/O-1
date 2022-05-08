@@ -16,6 +16,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// PostFileHandler handles POST request to /file.
 func PostFileHandler(w http.ResponseWriter, r *http.Request) {
 	fileName := r.URL.Path[1:]
 	fileNameWithPath := types.Server.LocalDir + "/" + fileName

@@ -12,6 +12,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// GetFile returns a file from the server.
 func GetFileHandler(w http.ResponseWriter, r *http.Request) {
 	fileName := r.URL.Path[1:]
 	logrus.Println("GetFile " + fileName)
