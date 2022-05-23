@@ -2,7 +2,7 @@ on: [push, pull_request]
 name: test
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -20,4 +20,3 @@ jobs:
       run: make logs
       if: always()
     timeout-minutes: 10
-    runs-on: self-hosted
