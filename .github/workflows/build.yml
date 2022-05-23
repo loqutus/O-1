@@ -14,11 +14,8 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
-    - name: start minikube
-      id: minikube
-      uses: medyagh/setup-minikube@master
     - name: make arm64
-      run: eval $(minikube docker-env) && make && make docker_arm64
+      run: make arm64
     - name: logs
       run: make logs
       if: always()
