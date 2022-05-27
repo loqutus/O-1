@@ -45,7 +45,7 @@ docker_arm64:
 	docker build . -f Dockerfile-arm64 -t loqutus/o-1-arm64
 	docker push loqutus/o-1-arm64
 	docker build . -f Dockerfile-client-arm64 -t loqutus/o-1-arm64-client
-	docker push loqutus/o-1-client-arm64
+	docker push loqutus/o-1-arm64-client
 
 docker_run:
 	docker stop o1 || true
